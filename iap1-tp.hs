@@ -4,7 +4,7 @@
 -- Integrante 1: Nombre Apellido, email, LU
 -- Integrante 2: Nombre Apellido, email, LU
 -- Integrante 3: Nombre Apellido, email, LU
--- Integrante 4: Nombre Apellido, email, LU
+-- Integrante 4: Mateo Otazúa Arce, tazuarce@gmail.com, 88/23
 
 type Usuario = (Integer, String) -- (id, nombre)
 type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
