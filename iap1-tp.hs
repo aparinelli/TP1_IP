@@ -59,7 +59,7 @@ estaRobertoCarlos = undefined
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
 publicacionesDe (_, _, []) _ = [] -- caso base
 publicacionesDe red u
- |  u == usuarioDePublicacion (head pubs) = [head pubs] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
+ | u == usuarioDePublicacion (head pubs) = [head pubs] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
  | otherwise = [] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
  where pubs = publicaciones red 
 
