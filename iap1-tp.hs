@@ -36,8 +36,15 @@ likesDePublicacion (_, _, us) = us
 
 -- Ejercicios
 
+-- Ejercicio 1 - tazuarce
+
+-- hace una lista con los nombres de los usuarios de la red social
 nombresDeUsuarios :: RedSocial -> [String]
-nombresDeUsuarios = undefined
+nombresDeUsuarios redX = (proyectarNombres (usuarios(redX)))
+
+proyectarNombres :: [Usuario] -> [String]
+proyectarNombres [] = []
+proyectarNombres (u:us) = (nombreDeUsuario u) : (proyectarNombres us)
 
 -- describir qué hace la función: .....
 amigosDe :: RedSocial -> Usuario -> [Usuario]
