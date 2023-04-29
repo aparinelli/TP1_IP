@@ -73,9 +73,16 @@ publicacionesDe red u
 -- tests: 
 -- publicacionesDe ([(0, "Andre"), (1, "Tazu"), (2, "Juan Pablo"), (3, "Alejo")], [], [((0,"Andre"), "", []), ((0, "Andre"), "", []), ((2,"Juan Pablo"), "",[]), ((1,"Tazu"), "", [])]) (0, "Andre")
 
--- describir qué hace la función: .....
+-- describir qué hace la función: dar una lista con las publicaciones que le gustaron al usuario
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
-publicacionesQueLeGustanA = undefined
+publicacionesQueLeGustanA red u = perteneceUsuarioalaLista u (publicaciones red)            -- llamo a otra funcion que da la lista de
+                                                                                            -- publicaciones que le dio like el usuario
+--auxiliar--
+perteneceUsuarioalaLista :: Usuario -> [Publicacion] -> [Publicacion]
+perteneceUsuarioalaLista u pub  | longitud (tail pub) == longitud pub && pertenece u (likesDePublicacion (head pub)) = pub
+                                | longitud pub <= 1 = []
+                                | likesDePublicacion (head pub) /= [] && pertenece u (likesDePublicacion (head pub)) = head pub : perteneceUsuarioalaLista u (tail pub)
+                                | otherwise = perteneceUsuarioalaLista u (tail pub)
 
 -- describir qué hace la función: .....
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
@@ -141,3 +148,13 @@ usuariosB = [usuario1, usuario2, usuario3, usuario5]
 relacionesB = [relacion1_2, relacion2_3]
 publicacionesB = [publicacion1_3, publicacion1_4, publicacion1_5, publicacion3_1, publicacion3_2, publicacion3_3]
 redB = (usuariosB, relacionesB, publicacionesB)
+
+-- auxiliares --
+longitud :: [t] -> Integer
+longitud [] = 0
+longitud (_ :xs) = 1 + longitud xs
+
+pertenece :: (Eq t) => t -> [t] -> Bool
+pertenece e s   | e == head s = True
+                | longitud s > 1 && e /= head s = pertenece e (tail s)
+                | otherwise = False 
