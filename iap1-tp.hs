@@ -55,7 +55,7 @@ usuarioConMasAmigos = undefined
 estaRobertoCarlos :: RedSocial -> Bool
 estaRobertoCarlos = undefined
 
--- Recibe una red social y un usuario perteneciente a la red social y devuelve todas sus publicaciones.
+-- Recibe una red social y un usuario perteneciente a la red social y devuelve una lista con todas sus publicaciones.
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
 publicacionesDe (_, _, []) _ = [] -- caso base
 publicacionesDe red u
@@ -65,7 +65,6 @@ publicacionesDe red u
 
 -- tests: 
 -- publicacionesDe ([(0, "Andre"), (1, "Tazu"), (2, "Juan Pablo"), (3, "Alejo")], [], [((0,"Andre"), "", []), ((0, "Andre"), "", []), ((2,"Juan Pablo"), "",[]), ((1,"Tazu"), "", [])]) (0, "Andre")
-
 
 -- describir qué hace la función: .....
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
