@@ -1,2 +1,2 @@
-# TP1_IP
+# TP_IP
 Trabajo Práctico 1 de Introduccción a la Programación
