@@ -1,2 +1,2 @@
 # TP_IP
-Trabajo Práctico 1 de Introduccción a la Programación
+Trabajo Práctico de Introduccción a la Programación
