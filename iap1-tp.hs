@@ -57,11 +57,10 @@ estaRobertoCarlos = undefined
 
 -- Recibe una red social y un usuario perteneciente a la red social y devuelve todas sus publicaciones.
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
+publicacionesDe (_, _, []) _ = [] -- caso base
 publicacionesDe red u
- | longitud pubs == 1 && esAutor     = [head pubs] -- caso base
- | longitud pubs == 1 && not esAutor = []          -- caso base
- | longitud pubs > 1  && esAutor     = [head pubs] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
- | longitud pubs > 1  && not esAutor = [] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
+ | esAutor = [head pubs] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
+ | otherwise = [] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
  where pubs = publicaciones red 
        esAutor = u == usuarioDePublicacion (head pubs) -- determina si "u" es autor de la primera publicacion de RedSocial
 
@@ -94,6 +93,8 @@ longitud (_:xs) = 1 + longitud xs
 pertenece :: (Eq t) => t -> [t] -> Bool
 pertenece e [] = False
 pertenece e (x:xs) = e == x || pertenece e xs
+
+-- TESTS
 
 usuario1 = (1, "Juan")
 usuario2 = (2, "Natalia")
