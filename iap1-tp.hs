@@ -59,10 +59,9 @@ estaRobertoCarlos = undefined
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
 publicacionesDe (_, _, []) _ = [] -- caso base
 publicacionesDe red u
- | esAutor = [head pubs] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
+ |  u == usuarioDePublicacion (head pubs) = [head pubs] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
  | otherwise = [] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
  where pubs = publicaciones red 
-       esAutor = u == usuarioDePublicacion (head pubs) -- determina si "u" es autor de la primera publicacion de RedSocial
 
 -- tests: 
 -- publicacionesDe ([(0, "Andre"), (1, "Tazu"), (2, "Juan Pablo"), (3, "Alejo")], [], [((0,"Andre"), "", []), ((0, "Andre"), "", []), ((2,"Juan Pablo"), "",[]), ((1,"Tazu"), "", [])]) (0, "Andre")
