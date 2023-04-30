@@ -166,9 +166,9 @@ compararAmigos redX (user:users)
 55555
 -}
 
--- describir qué hace la función: .....
+-- toma una red social, y devuelve True si tiene un usuario con mas de 1,000,000 amigos 
 estaRobertoCarlos :: RedSocial -> Bool
-estaRobertoCarlos = undefined
+estaRobertoCarlos red = ((usuarioConMasAmigos red) > 1000000)
 
 {- 
  6666
