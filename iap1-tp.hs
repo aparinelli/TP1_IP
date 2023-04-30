@@ -181,13 +181,12 @@ estaRobertoCarlos = undefined
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
 publicacionesDe (_, _, []) _ = [] -- caso base
 publicacionesDe red user
-    | user == usuarioDePublicacion (head pubs) = [head pubs] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) user
-    | otherwise = [] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) user
-    where pubs = publicaciones red -- puede cambiarse "pubs" por "(pub:pubs)" para ahorrarse los head y los tail
+    | user == usuarioDePublicacion pub = [pub] ++ publicacionesDe (usuarios red, relaciones red, pubs) user
+    | otherwise = [] ++ publicacionesDe (usuarios red, relaciones red, pubs) user
+    where (pub:pubs) = publicaciones red
 
 -- tests: 
 -- publicacionesDe ([(0, "Andre"), (1, "Tazu"), (2, "Juan Pablo"), (3, "Alejo")], [], [((0,"Andre"), "", []), ((0, "Andre"), "", []), ((2,"Juan Pablo"), "",[]), ((1,"Tazu"), "", [])]) (0, "Andre")
-
 
 {- 
 777777
