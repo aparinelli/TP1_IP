@@ -36,16 +36,57 @@ likesDePublicacion (_, _, us) = us
 
 -- Ejercicios
 
+-- recibe una red social y hace una lista con los nombres de los usuarios de esa red
 nombresDeUsuarios :: RedSocial -> [String]
-nombresDeUsuarios = undefined
+nombresDeUsuarios redX = (proyectarNombres (usuarios(redX)))
 
--- describir qué hace la función: .....
+proyectarNombres :: [Usuario] -> [String]
+proyectarNombres [] = []
+proyectarNombres (user:users) = (nombreDeUsuario user) : (proyectarNombres users)
+
+<<<<<<< HEAD
+-- Toma una red social junto con un usuario dentro de esta, y devuelve una lista de los usuarios con quien se relaciona. 
+
 amigosDe :: RedSocial -> Usuario -> [Usuario]
-amigosDe = undefined
+amigosDe (_ , [], _) _ = [] -- caso base
 
--- describir qué hace la función: .....
+amigosDe red u
+    | usuarioEnFst (head rels) u == True = [snd (head rels)] ++ amigosDe (usuarios red, tail (relaciones red), publicaciones red) u
+    | usuarioEnSnd (head rels) u == True = [fst (head rels)] ++ amigosDe (usuarios red, tail (relaciones red), publicaciones red) u
+    | otherwise                       = amigosDe (usuarios red, tail (relaciones red), publicaciones red) u
+    where rels = relaciones red
+
+-- lo divido en dos casos, cuando el usuario está en la primera posicion de la relación, y cuando está en la segunda posicion de la relacion.
+
+usuarioEnFst :: Relacion -> Usuario -> Bool
+usuarioEnFst rel u
+    | idDeUsuario u == idDeUsuario (fst rel) = True
+    | otherwise = False
+
+usuarioEnSnd :: Relacion -> Usuario -> Bool
+usuarioEnSnd rel u
+    | idDeUsuario u == idDeUsuario (snd rel) = True
+    | otherwise = False    
+=======
+-- toma un usuario en una red social y arma una lista de usuarios que son sus amigos
+amigosDe :: RedSocial -> Usuario -> [Usuario]
+amigosDe (_ , [], _) _ = []
+amigosDe red u
+    | userInFst (head rels) u == True = [snd (head rels)] ++ amigosDe (usuarios red, tail (rels), publicaciones red) u --si el user está primero, agarra el segundo
+    | userInSnd (head rels) u == True = [fst (head rels)] ++ amigosDe (usuarios red, tail (rels), publicaciones red) u --si el user está segundo, agarra el primero
+    | otherwise                       = amigosDe (usuarios red, tail (rels), publicaciones red) u --si no está el user, sigue con la siguiente relación
+    where rels = relaciones red
+>>>>>>> 4a07ae1d0060b198ab350ac1fca365c0027e11b3
+
+userInFst :: Relacion -> Usuario -> Bool
+userInFst rel u = u == (fst rel)
+
+userInSnd :: Relacion -> Usuario -> Bool
+userInSnd rel u = u == (snd rel)
+
+-- toma un usuario en una red social e indica la cantidad de amigos que tiene
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
-cantidadDeAmigos = undefined
+cantidadDeAmigos redX user = longitud (amigosDe redX user)
 
 -- describir qué hace la función: .....
 usuarioConMasAmigos :: RedSocial -> Usuario
@@ -55,13 +96,27 @@ usuarioConMasAmigos = undefined
 estaRobertoCarlos :: RedSocial -> Bool
 estaRobertoCarlos = undefined
 
--- describir qué hace la función: .....
+-- Recibe una red social y un usuario perteneciente a la red social y devuelve una lista con todas sus publicaciones.
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
-publicacionesDe = undefined
+publicacionesDe (_, _, []) _ = [] -- caso base
+publicacionesDe red u
+ | u == usuarioDePublicacion (head pubs) = [head pubs] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
+ | otherwise = [] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
+ where pubs = publicaciones red 
 
--- describir qué hace la función: .....
+-- tests: 
+-- publicacionesDe ([(0, "Andre"), (1, "Tazu"), (2, "Juan Pablo"), (3, "Alejo")], [], [((0,"Andre"), "", []), ((0, "Andre"), "", []), ((2,"Juan Pablo"), "",[]), ((1,"Tazu"), "", [])]) (0, "Andre")
+
+-- describir qué hace la función: dar una lista con las publicaciones que le gustaron al usuario
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
-publicacionesQueLeGustanA = undefined
+publicacionesQueLeGustanA red u = perteneceUsuarioalaLista u (publicaciones red)            -- llamo a otra funcion que da la lista de
+                                                                                            -- publicaciones que le dio like el usuario
+--auxiliar--
+perteneceUsuarioalaLista :: Usuario -> [Publicacion] -> [Publicacion]
+perteneceUsuarioalaLista u pub  | longitud (tail pub) == longitud pub && pertenece u (likesDePublicacion (head pub)) = pub
+                                | longitud pub <= 1 = []
+                                | likesDePublicacion (head pub) /= [] && pertenece u (likesDePublicacion (head pub)) = head pub : perteneceUsuarioalaLista u (tail pub)
+                                | otherwise = perteneceUsuarioalaLista u (tail pub)
 
 -- describir qué hace la función: .....
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
@@ -74,3 +129,58 @@ tieneUnSeguidorFiel = undefined
 -- describir qué hace la función: .....
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
 existeSecuenciaDeAmigos = undefined
+
+--
+
+-- auxiliares --
+
+longitud :: [t] -> Int
+longitud [] = 0
+longitud (_:xs) = 1 + longitud xs
+
+pertenece :: (Eq t) => t -> [t] -> Bool
+pertenece e [] = False
+pertenece e (x:xs) = e == x || pertenece e xs
+
+-- TESTS
+
+usuario1 = (1, "Juan")
+usuario2 = (2, "Natalia")
+usuario3 = (3, "Pedro")
+usuario4 = (4, "Mariela")
+usuario5 = (5, "Natalia")
+
+relacion1_2 = (usuario1, usuario2)
+relacion1_3 = (usuario1, usuario3)
+relacion1_4 = (usuario4, usuario1) -- Notar que el orden en el que aparecen los usuarios es indistinto
+relacion2_3 = (usuario3, usuario2)
+relacion2_4 = (usuario2, usuario4)
+relacion3_4 = (usuario4, usuario3)
+
+publicacion1_1 = (usuario1, "Este es mi primer post", [usuario2, usuario4])
+publicacion1_2 = (usuario1, "Este es mi segundo post", [usuario4])
+publicacion1_3 = (usuario1, "Este es mi tercer post", [usuario2, usuario5])
+publicacion1_4 = (usuario1, "Este es mi cuarto post", [])
+publicacion1_5 = (usuario1, "Este es como mi quinto post", [usuario5])
+
+publicacion2_1 = (usuario2, "Hello World", [usuario4])
+publicacion2_2 = (usuario2, "Good Bye World", [usuario1, usuario4])
+
+publicacion3_1 = (usuario3, "Lorem Ipsum", [])
+publicacion3_2 = (usuario3, "dolor sit amet", [usuario2])
+publicacion3_3 = (usuario3, "consectetur adipiscing elit", [usuario2, usuario5])
+
+publicacion4_1 = (usuario4, "I am Alice. Not", [usuario1, usuario2])
+publicacion4_2 = (usuario4, "I am Bob", [])
+publicacion4_3 = (usuario4, "Just kidding, i am Mariela", [usuario1, usuario3])
+
+
+usuariosA = [usuario1, usuario2, usuario3, usuario4]
+relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4]
+publicacionesA = [publicacion1_1, publicacion1_2, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
+redA = (usuariosA, relacionesA, publicacionesA)
+
+usuariosB = [usuario1, usuario2, usuario3, usuario5]
+relacionesB = [relacion1_2, relacion2_3]
+publicacionesB = [publicacion1_3, publicacion1_4, publicacion1_5, publicacion3_1, publicacion3_2, publicacion3_3]
+redB = (usuariosB, relacionesB, publicacionesB)
