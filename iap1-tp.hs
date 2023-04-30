@@ -236,13 +236,14 @@ tieneUnSeguidorFiel red user = seguidorFielEnPublicaciones (publicacionesDe red 
 -- auxiliar --
 
 seguidorFielEnPublicaciones :: [Publicacion] -> [Usuario] -> Bool
-seguidorFielEnPublicaciones _ [] = False                                --por la funcion likeoTodasLasPubs verifica si un usuario
-seguidorFielEnPublicaciones [] _ = False                                --le dio like a todas las publicaciones de la lista.
-seguidorFielEnPublicaciones pub (user:users)                            --de no ser asi, prueba con el siguiente usuario de la lista
-    | likeoTodasLasPubs pub user = True                                         
-    | not (likeoTodasLasPubs pub user) = seguidorFielEnPublicaciones pub users
-    -- yo al parámetro "pub" le pondría "pubs" acá, porque es la lista de publicacioneS -tazu
+seguidorFielEnPublicaciones _ [] = False                                 --por la funcion likeoTodasLasPubs verifica si un usuario
+seguidorFielEnPublicaciones [] _ = False                                 --le dio like a todas las publicaciones de la lista.
+seguidorFielEnPublicaciones pubs (user:users)                            --de no ser asi, prueba con el siguiente usuario de la lista
+    | likeoTodasLasPubs pubs user = True                                         
+    | not (likeoTodasLasPubs pubs user) = seguidorFielEnPublicaciones pubs users
     -- creo que queda mejor usar "otherwise" en vez de "not (likeoTodasLasPibs pub user)" -tazu
+    -- para mi el codigo es mas "expresivo" si lo dejamos asi, pq no es que en cualquier
+    -- otro caso haces "seguidorFielEnPublicaciones" solo si el ultimo user no era el seguidor fiel
 
 likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
 likeoTodasLasPubs (pub:pubs) user
