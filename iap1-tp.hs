@@ -147,9 +147,15 @@ cantidadDeAmigos redX user = longitud (amigosDe redX user)
     44
 -}
 
--- describir qué hace la función: .....
+-- toma una red social, y devuelve su usuario con más amigos (si varios tienen la mayor cantidad, da uno de ellos)
 usuarioConMasAmigos :: RedSocial -> Usuario
-usuarioConMasAmigos = undefined
+usuarioConMasAmigos redX = compararAmigos redX (usuarios(redX))
+
+-- recursión comparando la cantidad de amigos de n-1 y n, devolviendo el que sea mayor
+compararAmigos :: RedSocial -> [Usuario] -> Usuario
+compararAmigos redX (user:users)    | users == [] = user
+                                    | (cantidadDeAmigos redX user) >= (cantidadDeAmigos redX (compararAmigos redX users)) = user
+                                    | otherwise = (head users) -- "head" es para convertirlo de tipo "[Usuario]" a tipo "Usuario"; debe haber alguna mejor manera
 
 {- 
 555555
