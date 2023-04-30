@@ -172,6 +172,7 @@ publicacionesDe red user
 -- tests: 
 -- publicacionesDe ([(0, "Andre"), (1, "Tazu"), (2, "Juan Pablo"), (3, "Alejo")], [], [((0,"Andre"), "", []), ((0, "Andre"), "", []), ((2,"Juan Pablo"), "",[]), ((1,"Tazu"), "", [])]) (0, "Andre")
 
+
 {- 
 777777
    77
@@ -180,24 +181,15 @@ publicacionesDe red user
 77
  -}
 
--- describir qué hace la función: dar una lista con las publicaciones que le gustaron al usuario
+-- Dar una lista con las publicaciones que le gustaron al usuario
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
-publicacionesQueLeGustanA red user = perteneceUsuarioalaLista (publicaciones red)      -- llamo a otra funcion que da la lista de
-                                                                                            -- publicaciones que le dio like el usuario
-
-perteneceUsuarioalaLista :: Usuario -> [Publicacion] -> [Publicacion] -- "proyectarUsuarios" sería un mejor nombre para esta función
-perteneceUsuarioalaLista user pub -- el parámetro "pub" puede cambiarse por "(pub:pubs)"" para ahorrarse usar las funciones head (con "pub") y tail (con "pubs")
-    | longitud (tail pub) == longitud pub && pertenece user (likesDePublicacion (head pub)) = pub -- ¿la primera condición chequea si "pub" es una lista vacía?
-    | longitud pub <= 1 = []
-    | likesDePublicacion (head pub) /= [] && pertenece user (likesDePublicacion (head pub)) = head pub : perteneceUsuarioalaLista user (tail pub) -- no es necesario chequear si la publicación no tiene likes; la función "pertenece" ya va a reconocer que el usuario no está en la lista vacía
-    | otherwise = perteneceUsuarioalaLista user (tail pub)
-
--- arreglo de tazu
-{- proyectarPublicaciones :: Usuario -> [Publicacion] -> [Publicacion] -- siento que podríamos darle un nombre mejor a esta función -tazu
-proyectarPublicaciones user [] = []
-proyectarPublicaciones user (pub:pubs)
-    | pertenece user (likesDePublicacion pub) = pub : proyectarPublicaciones user (pubs)
-    | otherwise = proyectarPublicaciones user pubs -}
+publicacionesQueLeGustanA red user = proyectarPublicaciones user (publicaciones red)           -- llamo a otra funcion que da la lista de
+                                                                                               -- publicaciones que le dio like el usuario
+--auxiliar--
+proyectarPublicaciones :: Usuario -> [Publicacion] -> [Publicacion]
+proyectarPublicaciones _ [] = []
+proyectarPublicaciones user (pub:pubs) | pertenece user (likesDePublicacion pub) = pub : proyectarPublicaciones user pubs --verifico que el user le dio like
+                                       | otherwise = proyectarPublicaciones user pubs                                     --si el user no dio like sigo comprobando con el resto de pubs  
 
 {- 
  8888
@@ -207,9 +199,10 @@ proyectarPublicaciones user (pub:pubs)
  8888
 -}
 
--- describir qué hace la función: .....
+-- Devuelce True si dos usuarios le dieron like a exactamente las mismas publicaciones de una red
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
-lesGustanLasMismasPublicaciones = undefined
+lesGustanLasMismasPublicaciones red user1 user2 | publicacionesQueLeGustanA red user1 == publicacionesQueLeGustanA red user2 = True
+                                                | otherwise = False
 
 {- 
  9999
