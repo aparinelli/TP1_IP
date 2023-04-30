@@ -153,9 +153,10 @@ usuarioConMasAmigos redX = compararAmigos redX (usuarios(redX))
 
 -- recursión comparando la cantidad de amigos de n-1 y n, devolviendo el que sea mayor
 compararAmigos :: RedSocial -> [Usuario] -> Usuario
-compararAmigos redX (user:users)    | users == [] = user
-                                    | (cantidadDeAmigos redX user) >= (cantidadDeAmigos redX (compararAmigos redX users)) = user
-                                    | otherwise = (head users) -- "head" es para convertirlo de tipo "[Usuario]" a tipo "Usuario"; debe haber alguna mejor manera
+compararAmigos redX (user:users)
+    | users == [] = user
+    | (cantidadDeAmigos redX user) >= (cantidadDeAmigos redX (compararAmigos redX users)) = user
+    | otherwise = (head users) -- "head" es para convertirlo de tipo "[Usuario]" a tipo "Usuario"; debe haber alguna mejor manera
 
 {- 
 555555
@@ -203,8 +204,9 @@ publicacionesQueLeGustanA red user = proyectarPublicaciones user (publicaciones 
 --auxiliar--
 proyectarPublicaciones :: Usuario -> [Publicacion] -> [Publicacion]
 proyectarPublicaciones _ [] = []
-proyectarPublicaciones user (pub:pubs) | pertenece user (likesDePublicacion pub) = pub : proyectarPublicaciones user pubs --verifico que el user le dio like
-                                       | otherwise = proyectarPublicaciones user pubs                                     --si el user no dio like sigo comprobando con el resto de pubs  
+proyectarPublicaciones user (pub:pubs)
+    | pertenece user (likesDePublicacion pub) = pub : proyectarPublicaciones user pubs --verifico que el user le dio like
+    | otherwise = proyectarPublicaciones user pubs                                     --si el user no dio like sigo comprobando con el resto de pubs  
 
 {- 
  8888
@@ -234,17 +236,19 @@ tieneUnSeguidorFiel red user = seguidorFielEnPublicaciones (publicacionesDe red 
 -- auxiliar --
 
 seguidorFielEnPublicaciones :: [Publicacion] -> [Usuario] -> Bool
-seguidorFielEnPublicaciones _ [] = False                                                                                  --por la funcion likeoTodasLasPubs verifica si un usuario
-seguidorFielEnPublicaciones [] _ = False                                                                                  --le dio like a todas las publicaciones de la lista.
-seguidorFielEnPublicaciones pub (user:users)  | likeoTodasLasPubs pub user = True                                         --de no ser asi, prueba con el siguiente usuario de la lista
-                                              | not (likeoTodasLasPubs pub user) = seguidorFielEnPublicaciones pub users
-                            -- yo al parámetro "pub" le pondría "pubs" acá, porque es la lista de publicacioneS -tazu
-                                              -- creo que queda mejor usar "otherwise" en vez de "not (likeoTodasLasPibs pub user)"
+seguidorFielEnPublicaciones _ [] = False                                --por la funcion likeoTodasLasPubs verifica si un usuario
+seguidorFielEnPublicaciones [] _ = False                                --le dio like a todas las publicaciones de la lista.
+seguidorFielEnPublicaciones pub (user:users)                            --de no ser asi, prueba con el siguiente usuario de la lista
+    | likeoTodasLasPubs pub user = True                                         
+    | not (likeoTodasLasPubs pub user) = seguidorFielEnPublicaciones pub users
+    -- yo al parámetro "pub" le pondría "pubs" acá, porque es la lista de publicacioneS -tazu
+    -- creo que queda mejor usar "otherwise" en vez de "not (likeoTodasLasPibs pub user)" -tazu
 
 likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
-likeoTodasLasPubs (pub:pubs) user | pubs == [] && pertenece user (likesDePublicacion pub) = True            --esta funcion verifica si un usuario pertenece
-                                  | pertenece user (likesDePublicacion pub) = likeoTodasLasPubs pubs user   --a la lista de likes de cada publicacion de un lista
-                                  | otherwise = False
+likeoTodasLasPubs (pub:pubs) user
+    | pubs == [] && pertenece user (likesDePublicacion pub) = True            --esta funcion verifica si un usuario pertenece
+    | pertenece user (likesDePublicacion pub) = likeoTodasLasPubs pubs user   --a la lista de likes de cada publicacion de un lista
+    | otherwise = False
 
 
 {- 
@@ -286,9 +290,10 @@ pertenece e [] = False
 pertenece e (x:xs) = e == x || pertenece e xs
 
 quitar :: (Eq t) => t -> [t] -> [t]
-quitar n (x:xs) | pertenece n (x:xs) == False = (x:xs)
-                | n == x = xs
-                | n /= x = x : quitar n xs
+quitar n (x:xs)
+    | pertenece n (x:xs) == False = (x:xs)
+    | n == x = xs
+    | n /= x = x : quitar n xs
 
 
 
