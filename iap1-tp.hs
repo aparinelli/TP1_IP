@@ -36,9 +36,7 @@ likesDePublicacion (_, _, us) = us
 
 -- Ejercicios
 
--- Ejercicio 1 - tazuarce
-
--- hace una lista con los nombres de los usuarios de la red social
+-- recibe una red social y hace una lista con los nombres de los usuarios de esa red
 nombresDeUsuarios :: RedSocial -> [String]
 nombresDeUsuarios redX = (proyectarNombres (usuarios(redX)))
 
@@ -114,6 +112,8 @@ existeSecuenciaDeAmigos = undefined
 
 --
 
+-- auxiliares --
+
 longitud :: [t] -> Integer
 longitud [] = 0
 longitud (_:xs) = 1 + longitud xs
@@ -164,13 +164,3 @@ usuariosB = [usuario1, usuario2, usuario3, usuario5]
 relacionesB = [relacion1_2, relacion2_3]
 publicacionesB = [publicacion1_3, publicacion1_4, publicacion1_5, publicacion3_1, publicacion3_2, publicacion3_3]
 redB = (usuariosB, relacionesB, publicacionesB)
-
--- auxiliares --
-longitud :: [t] -> Integer
-longitud [] = 0
-longitud (_ :xs) = 1 + longitud xs
-
-pertenece :: (Eq t) => t -> [t] -> Bool
-pertenece e s   | e == head s = True
-                | longitud s > 1 && e /= head s = pertenece e (tail s)
-                | otherwise = False 
