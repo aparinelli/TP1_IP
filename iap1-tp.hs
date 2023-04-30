@@ -3,7 +3,7 @@
 -- Nombre de Grupo: xx
 -- Integrante 1: Nombre Apellido, email, LU
 -- Integrante 2: Nombre Apellido, email, LU
--- Integrante 3: Nombre Apellido, email, LU
+-- Integrante 3: Juan Pablo Tarela, juanptarela@gmail.com, 151/23
 -- Integrante 4: Mateo Otazúa Arce, tazuarce@gmail.com, 88/23
 
 type Usuario = (Integer, String) -- (id, nombre)
@@ -48,7 +48,23 @@ proyectarNombres (u:us) = (nombreDeUsuario u) : (proyectarNombres us)
 
 -- describir qué hace la función: .....
 amigosDe :: RedSocial -> Usuario -> [Usuario]
-amigosDe = undefined
+amigosDe (_ , [], _) _ = []
+
+amigosDe red u
+    | userInFst (head rels) u == True = [snd (head rels)] ++ amigosDe (usuarios red, tail (relaciones red), publicaciones red) u
+    | userInSnd (head rels) u == True = [fst (head rels)] ++ amigosDe (usuarios red, tail (relaciones red), publicaciones red) u
+    | otherwise                       = amigosDe (usuarios red, tail (relaciones red), publicaciones red) u
+    where rels = relaciones red
+
+userInFst :: Relacion -> Usuario -> Bool
+userInFst rel u
+    | idDeUsuario u == idDeUsuario (fst rel) = True
+    | otherwise = False
+
+userInSnd :: Relacion -> Usuario -> Bool
+userInSnd rel u
+    | idDeUsuario u == idDeUsuario (snd rel) = True
+    | otherwise = False    
 
 -- describir qué hace la función: .....
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
