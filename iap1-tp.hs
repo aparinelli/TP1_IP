@@ -109,7 +109,7 @@ proyectarNombres [] = []
 proyectarNombres (user:users) = (nombreDeUsuario user) : (proyectarNombres users)
 
 {-  
-2222
+ 2222
 22  22
    22
   22
@@ -128,7 +128,7 @@ amigosDeAux (rel:rels) user
     | otherwise       = amigosDeAux rels user
 
 {-  
-3333
+ 3333
 33  33
    333
 33  33
