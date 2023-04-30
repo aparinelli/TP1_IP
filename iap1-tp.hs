@@ -201,8 +201,7 @@ proyectarPublicaciones user (pub:pubs) | pertenece user (likesDePublicacion pub)
 
 -- Devuelce True si dos usuarios le dieron like a exactamente las mismas publicaciones de una red
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
-lesGustanLasMismasPublicaciones red user1 user2 | publicacionesQueLeGustanA red user1 == publicacionesQueLeGustanA red user2 = True
-                                                | otherwise = False
+lesGustanLasMismasPublicaciones red user1 user2 = publicacionesQueLeGustanA red user1 == publicacionesQueLeGustanA red user2
 
 {- 
  9999
