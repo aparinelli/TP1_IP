@@ -44,45 +44,17 @@ proyectarNombres :: [Usuario] -> [String]
 proyectarNombres [] = []
 proyectarNombres (user:users) = (nombreDeUsuario user) : (proyectarNombres users)
 
-<<<<<<< HEAD
 -- Toma una red social junto con un usuario dentro de esta, y devuelve una lista de los usuarios con quien se relaciona. 
 
 amigosDe :: RedSocial -> Usuario -> [Usuario]
-amigosDe (_ , [], _) _ = [] -- caso base
+amigosDe red user = amigosDeAux (relaciones red) user
 
-amigosDe red u
-    | usuarioEnFst (head rels) u == True = [snd (head rels)] ++ amigosDe (usuarios red, tail (relaciones red), publicaciones red) u
-    | usuarioEnSnd (head rels) u == True = [fst (head rels)] ++ amigosDe (usuarios red, tail (relaciones red), publicaciones red) u
-    | otherwise                       = amigosDe (usuarios red, tail (relaciones red), publicaciones red) u
-    where rels = relaciones red
-
--- lo divido en dos casos, cuando el usuario está en la primera posicion de la relación, y cuando está en la segunda posicion de la relacion.
-
-usuarioEnFst :: Relacion -> Usuario -> Bool
-usuarioEnFst rel u
-    | idDeUsuario u == idDeUsuario (fst rel) = True
-    | otherwise = False
-
-usuarioEnSnd :: Relacion -> Usuario -> Bool
-usuarioEnSnd rel u
-    | idDeUsuario u == idDeUsuario (snd rel) = True
-    | otherwise = False    
-=======
--- toma un usuario en una red social y arma una lista de usuarios que son sus amigos
-amigosDe :: RedSocial -> Usuario -> [Usuario]
-amigosDe (_ , [], _) _ = []
-amigosDe red u
-    | userInFst (head rels) u == True = [snd (head rels)] ++ amigosDe (usuarios red, tail (rels), publicaciones red) u --si el user está primero, agarra el segundo
-    | userInSnd (head rels) u == True = [fst (head rels)] ++ amigosDe (usuarios red, tail (rels), publicaciones red) u --si el user está segundo, agarra el primero
-    | otherwise                       = amigosDe (usuarios red, tail (rels), publicaciones red) u --si no está el user, sigue con la siguiente relación
-    where rels = relaciones red
->>>>>>> 4a07ae1d0060b198ab350ac1fca365c0027e11b3
-
-userInFst :: Relacion -> Usuario -> Bool
-userInFst rel u = u == (fst rel)
-
-userInSnd :: Relacion -> Usuario -> Bool
-userInSnd rel u = u == (snd rel)
+amigosDeAux :: [Relacion] -> Usuario -> [Usuario]
+amigosDeAux [] _ = []
+amigosDeAux (rel:rels) user 
+    | user == fst rel = (snd rel) : (amigosDeAux rels user) 
+    | user == snd rel = (fst rel) : (amigosDeAux rels user) 
+    | otherwise       = amigosDeAux rels user
 
 -- toma un usuario en una red social e indica la cantidad de amigos que tiene
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
