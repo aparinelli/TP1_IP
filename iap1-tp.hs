@@ -16,6 +16,9 @@
 -- Integrante 3: Juan Pablo Tarela, juanptarela@gmail.com,    151/23
 -- Integrante 4: Mateo Otazúa Arce, tazuarce@gmail.com,       88/23
 
+
+
+
 {- 
    /$$     /$$                              
   | $$    |__/                              
@@ -34,6 +37,9 @@ type Usuario = (Integer, String) -- (id, nombre)
 type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
 type Publicacion = (Usuario, String, [Usuario]) -- (usuario que publica, texto publicacion, likes)
 type RedSocial = ([Usuario], [Relacion], [Publicacion])
+
+
+
 
 {-
  /$$                           /$$                              
@@ -66,6 +72,10 @@ usuarioDePublicacion (u, _, _) = u
 
 likesDePublicacion :: Publicacion -> [Usuario]
 likesDePublicacion (_, _, us) = us
+
+
+
+
 
 {- 
                                              /$$           /$$                    
@@ -167,7 +177,7 @@ publicacionesDe (_, _, []) _ = [] -- caso base
 publicacionesDe red user
     | user == usuarioDePublicacion (head pubs) = [head pubs] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) user
     | otherwise = [] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) user
-    where pubs = publicaciones red 
+    where pubs = publicaciones red -- puede cambiarse "pubs" por "(pub:pubs)" para ahorrarse los head y los tail
 
 -- tests: 
 -- publicacionesDe ([(0, "Andre"), (1, "Tazu"), (2, "Juan Pablo"), (3, "Alejo")], [], [((0,"Andre"), "", []), ((0, "Andre"), "", []), ((2,"Juan Pablo"), "",[]), ((1,"Tazu"), "", [])]) (0, "Andre")
@@ -235,6 +245,10 @@ existeSecuenciaDeAmigos = undefined
 
 --
 
+
+
+
+
 {-
                                /$$ /$$ /$$                                        
                               |__/| $$|__/                                        
@@ -254,6 +268,12 @@ longitud (_:xs) = 1 + longitud xs
 pertenece :: (Eq t) => t -> [t] -> Bool
 pertenece e [] = False
 pertenece e (x:xs) = e == x || pertenece e xs
+
+
+
+
+
+
 
 
 {- 
