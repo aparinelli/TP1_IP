@@ -1,6 +1,6 @@
 -- Completar con los datos del grupo
 --
--- Nombre de Grupo: xx
+-- Nombre de Grupo: Clemente
 -- Integrante 1: Nombre Apellido, email, LU
 -- Integrante 2: Nombre Apellido, email, LU
 -- Integrante 3: Juan Pablo Tarela, juanptarela@gmail.com, 151/23
@@ -79,20 +79,21 @@ publicacionesDe red u
 -- tests: 
 -- publicacionesDe ([(0, "Andre"), (1, "Tazu"), (2, "Juan Pablo"), (3, "Alejo")], [], [((0,"Andre"), "", []), ((0, "Andre"), "", []), ((2,"Juan Pablo"), "",[]), ((1,"Tazu"), "", [])]) (0, "Andre")
 
--- describir qué hace la función: dar una lista con las publicaciones que le gustaron al usuario
+-- Dar una lista con las publicaciones que le gustaron al usuario
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
-publicacionesQueLeGustanA red u = perteneceUsuarioalaLista u (publicaciones red)            -- llamo a otra funcion que da la lista de
-                                                                                            -- publicaciones que le dio like el usuario
+publicacionesQueLeGustanA red user = likesDeUser user (publicaciones red)           -- llamo a otra funcion que da la lista de
+                                                                                    -- publicaciones que le dio like el usuario
 --auxiliar--
-perteneceUsuarioalaLista :: Usuario -> [Publicacion] -> [Publicacion]
-perteneceUsuarioalaLista u pub  | longitud (tail pub) == longitud pub && pertenece u (likesDePublicacion (head pub)) = pub
-                                | longitud pub <= 1 = []
-                                | likesDePublicacion (head pub) /= [] && pertenece u (likesDePublicacion (head pub)) = head pub : perteneceUsuarioalaLista u (tail pub)
-                                | otherwise = perteneceUsuarioalaLista u (tail pub)
+likesDeUser :: Usuario -> [Publicacion] -> [Publicacion]
+likesDeUser _ [] = []
+likesDeUser user (pub:pubs) | longitud pubs == longitud (pub:pubs) && pertenece user (likesDePublicacion pub) = [pub]   --si es la ultima pub de la lista verifico si el user le dio like
+                            | pertenece user (likesDePublicacion pub) = pub : likesDeUser user pubs                     --verifico que el user le dio like
+                            | otherwise = likesDeUser user pubs                                                         --si el user no dio like sigo comprobando con el resto de pubs
 
--- describir qué hace la función: .....
+-- Devuelce True si dos usuarios le dieron like a exactamente las mismas publicaciones de una red
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
-lesGustanLasMismasPublicaciones = undefined
+lesGustanLasMismasPublicaciones red user1 user2 | publicacionesQueLeGustanA red user1 == publicacionesQueLeGustanA red user2 = True
+                                                | otherwise = False
 
 -- describir qué hace la función: .....
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
