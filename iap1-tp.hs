@@ -238,7 +238,8 @@ seguidorFielEnPublicaciones _ [] = False                                        
 seguidorFielEnPublicaciones [] _ = False                                                                                  --le dio like a todas las publicaciones de la lista.
 seguidorFielEnPublicaciones pub (user:users)  | likeoTodasLasPubs pub user = True                                         --de no ser asi, prueba con el siguiente usuario de la lista
                                               | not (likeoTodasLasPubs pub user) = seguidorFielEnPublicaciones pub users
-                                      
+                            -- yo al parámetro "pub" le pondría "pubs" acá, porque es la lista de publicacioneS -tazu
+                                              -- creo que queda mejor usar "otherwise" en vez de "not (likeoTodasLasPibs pub user)"
 
 likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
 likeoTodasLasPubs (pub:pubs) user | pubs == [] && pertenece user (likesDePublicacion pub) = True            --esta funcion verifica si un usuario pertenece
