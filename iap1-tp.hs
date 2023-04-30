@@ -241,9 +241,18 @@ seguidorFielEnPublicaciones [] _ = False                                 --le di
 seguidorFielEnPublicaciones pubs (user:users)                            --de no ser asi, prueba con el siguiente usuario de la lista
     | likeoTodasLasPubs pubs user = True                                         
     | not (likeoTodasLasPubs pubs user) = seguidorFielEnPublicaciones pubs users
-    -- creo que queda mejor usar "otherwise" en vez de "not (likeoTodasLasPibs pub user)" -tazu
+    -- creo que queda mejor usar "otherwise" en vez de "not (likeoTodasLasPibs pub user)"
+    -- firma: tazu
+
     -- para mi el codigo es mas "expresivo" si lo dejamos asi, pq no es que en cualquier
     -- otro caso haces "seguidorFielEnPublicaciones" solo si el ultimo user no era el seguidor fiel
+    -- firma: juanpa
+    
+    -- no es necesario especificar tanto si se entiende bien; resumir muchas veces facilita la lectura; pensalo como texto:
+    -- "si el usuario likeo todas las publicaciones de esta lista de publicaciones, esto; si el usuario no likeo todas las publicaciones de esta lista de publicaciones, esto otro"
+    -- "si el usuario likeo todas las publicaciones de esta lista de publicaciones, esto; si no, esto otro"
+    -- o sea, si no se cumple la primera condición, entonces entra en la categoría "cualquier otro caso"; literalmente es "otherwise"
+    -- firma: tazu
 
 likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
 likeoTodasLasPubs (pub:pubs) user
