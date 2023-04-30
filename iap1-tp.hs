@@ -12,9 +12,9 @@
 
 -- Nombre de Grupo: Clemente
 -- Integrante 1: Nombre Apellido, email, LU
--- Integrante 2: Nombre Apellido, email, LU
--- Integrante 3: Juan Pablo Tarela, juanptarela@gmail.com, 151/23
--- Integrante 4: Mateo Otazúa Arce, tazuarce@gmail.com, 88/23
+-- Integrante 2: Alejo Parinelli,   alejoparinelli@gmail,com, 115/23
+-- Integrante 3: Juan Pablo Tarela, juanptarela@gmail.com,    151/23
+-- Integrante 4: Mateo Otazúa Arce, tazuarce@gmail.com,       88/23
 
 {- 
    /$$     /$$                              
