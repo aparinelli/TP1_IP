@@ -42,16 +42,15 @@ nombresDeUsuarios redX = (proyectarNombres (usuarios(redX)))
 
 proyectarNombres :: [Usuario] -> [String]
 proyectarNombres [] = []
-proyectarNombres (u:us) = (nombreDeUsuario u) : (proyectarNombres us)
+proyectarNombres (user:users) = (nombreDeUsuario user) : (proyectarNombres users)
 
 -- describir qué hace la función: .....
 amigosDe :: RedSocial -> Usuario -> [Usuario]
 amigosDe (_ , [], _) _ = []
-
 amigosDe red u
-    | userInFst (head rels) u == True = [snd (head rels)] ++ amigosDe (usuarios red, tail (relaciones red), publicaciones red) u
-    | userInSnd (head rels) u == True = [fst (head rels)] ++ amigosDe (usuarios red, tail (relaciones red), publicaciones red) u
-    | otherwise                       = amigosDe (usuarios red, tail (relaciones red), publicaciones red) u
+    | userInFst (head rels) u == True = [snd (head rels)] ++ amigosDe (usuarios red, tail (relaciones red), publicaciones red) u --si el user está primero, agarra el segundo
+    | userInSnd (head rels) u == True = [fst (head rels)] ++ amigosDe (usuarios red, tail (relaciones red), publicaciones red) u --si el user está segundo, agarra el primero
+    | otherwise                       = amigosDe (usuarios red, tail (relaciones red), publicaciones red) u --si no está el user, sigue con la siguiente relación
     where rels = relaciones red
 
 userInFst :: Relacion -> Usuario -> Bool
@@ -64,9 +63,9 @@ userInSnd rel u
     | idDeUsuario u == idDeUsuario (snd rel) = True
     | otherwise = False    
 
--- describir qué hace la función: .....
+-- toma un usuario en una red social e indica la cantidad de amigos que tiene
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
-cantidadDeAmigos = undefined
+cantidadDeAmigos redX user = longitud (amigosDe redX user)
 
 -- describir qué hace la función: .....
 usuarioConMasAmigos :: RedSocial -> Usuario
@@ -114,7 +113,7 @@ existeSecuenciaDeAmigos = undefined
 
 -- auxiliares --
 
-longitud :: [t] -> Integer
+longitud :: [t] -> Int
 longitud [] = 0
 longitud (_:xs) = 1 + longitud xs
 
