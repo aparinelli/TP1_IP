@@ -226,9 +226,25 @@ lesGustanLasMismasPublicaciones red user1 user2 = publicacionesQueLeGustanA red 
  9999
 -}
 
--- describir qué hace la función: .....
+-- Me dan una red y un usuario y tengo que definir si en las publicaciones de ese ususario en esa red hay otro usuario2 que le dio like a sus publicaciones
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
-tieneUnSeguidorFiel = undefined
+tieneUnSeguidorFiel red user = seguidorFielEnPublicaciones (publicacionesDe red user) (quitar user (usuarios red))
+
+
+-- auxiliar --
+
+seguidorFielEnPublicaciones :: [Publicacion] -> [Usuario] -> Bool
+seguidorFielEnPublicaciones _ [] = False                                                                                  --por la funcion likeoTodasLasPubs verifica si un usuario
+seguidorFielEnPublicaciones [] _ = False                                                                                  --le dio like a todas las publicaciones de la lista.
+seguidorFielEnPublicaciones pub (user:users)  | likeoTodasLasPubs pub user = True                                         --de no ser asi, prueba con el siguiente usuario de la lista
+                                              | not (likeoTodasLasPubs pub user) = seguidorFielEnPublicaciones pub users
+                                      
+
+likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
+likeoTodasLasPubs (pub:pubs) user | pubs == [] && pertenece user (likesDePublicacion pub) = True            --esta funcion verifica si un usuario pertenece
+                                  | pertenece user (likesDePublicacion pub) = likeoTodasLasPubs pubs user   --a la lista de likes de cada publicacion de un lista
+                                  | otherwise = False
+
 
 {- 
 1111    0000
@@ -267,6 +283,11 @@ longitud (_:xs) = 1 + longitud xs
 pertenece :: (Eq t) => t -> [t] -> Bool
 pertenece e [] = False
 pertenece e (x:xs) = e == x || pertenece e xs
+
+quitar :: (Eq t) => t -> [t] -> [t]
+quitar n (x:xs) | pertenece n (x:xs) == False = (x:xs)
+                | n == x = xs
+                | n /= x = x : quitar n xs
 
 
 
