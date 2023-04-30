@@ -44,24 +44,20 @@ proyectarNombres :: [Usuario] -> [String]
 proyectarNombres [] = []
 proyectarNombres (user:users) = (nombreDeUsuario user) : (proyectarNombres users)
 
--- describir qué hace la función: .....
+-- toma un usuario en una red social y arma una lista de usuarios que son sus amigos
 amigosDe :: RedSocial -> Usuario -> [Usuario]
 amigosDe (_ , [], _) _ = []
 amigosDe red u
-    | userInFst (head rels) u == True = [snd (head rels)] ++ amigosDe (usuarios red, tail (relaciones red), publicaciones red) u --si el user está primero, agarra el segundo
-    | userInSnd (head rels) u == True = [fst (head rels)] ++ amigosDe (usuarios red, tail (relaciones red), publicaciones red) u --si el user está segundo, agarra el primero
-    | otherwise                       = amigosDe (usuarios red, tail (relaciones red), publicaciones red) u --si no está el user, sigue con la siguiente relación
+    | userInFst (head rels) u == True = [snd (head rels)] ++ amigosDe (usuarios red, tail (rels), publicaciones red) u --si el user está primero, agarra el segundo
+    | userInSnd (head rels) u == True = [fst (head rels)] ++ amigosDe (usuarios red, tail (rels), publicaciones red) u --si el user está segundo, agarra el primero
+    | otherwise                       = amigosDe (usuarios red, tail (rels), publicaciones red) u --si no está el user, sigue con la siguiente relación
     where rels = relaciones red
 
 userInFst :: Relacion -> Usuario -> Bool
-userInFst rel u
-    | idDeUsuario u == idDeUsuario (fst rel) = True
-    | otherwise = False
+userInFst rel u = u == (fst rel)
 
 userInSnd :: Relacion -> Usuario -> Bool
-userInSnd rel u
-    | idDeUsuario u == idDeUsuario (snd rel) = True
-    | otherwise = False    
+userInSnd rel u = u == (snd rel)
 
 -- toma un usuario en una red social e indica la cantidad de amigos que tiene
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
