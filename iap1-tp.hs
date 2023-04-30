@@ -8,7 +8,7 @@
 | $$      | $$| $$_____/| $$ | $$ | $$| $$_____/| $$  | $$  | $$ /$$| $$_____/
 |  $$$$$$$| $$|  $$$$$$$| $$ | $$ | $$|  $$$$$$$| $$  | $$  |  $$$$/|  $$$$$$$
  \_______/|__/ \_______/|__/ |__/ |__/ \_______/|__/  |__/   \___/   \_______/
- -}
+-}
 
 -- Nombre de Grupo: Clemente
 -- Integrante 1: Nombre Apellido, email, LU
@@ -31,7 +31,7 @@
               | $$                          
               | $$                          
               |__/                          
- -}
+-}
 
 type Usuario = (Integer, String) -- (id, nombre)
 type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
@@ -194,7 +194,7 @@ publicacionesDe red user
   77
  77
 77
- -}
+-}
 
 -- Dar una lista con las publicaciones que le gustaron al usuario
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
@@ -224,25 +224,19 @@ lesGustanLasMismasPublicaciones red user1 user2 = publicacionesQueLeGustanA red 
  99999
     99
  9999
- -}
+-}
 
 -- describir qué hace la función: .....
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
 tieneUnSeguidorFiel = undefined
 
 {- 
-1111
-  11
-  11
-  11
-111111
-
- 0000
-00  00
-00  00
-00  00
- 0000
- -}
+1111    0000
+  11   00  00
+  11   00  00
+  11   00  00
+111111  0000
+-}
 
 -- describir qué hace la función: .....
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
