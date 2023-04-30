@@ -45,7 +45,6 @@ proyectarNombres [] = []
 proyectarNombres (user:users) = (nombreDeUsuario user) : (proyectarNombres users)
 
 -- Toma una red social junto con un usuario dentro de esta, y devuelve una lista de los usuarios con quien se relaciona. 
-
 amigosDe :: RedSocial -> Usuario -> [Usuario]
 amigosDe red user = amigosDeAux (relaciones red) user
 
@@ -71,24 +70,32 @@ estaRobertoCarlos = undefined
 -- Recibe una red social y un usuario perteneciente a la red social y devuelve una lista con todas sus publicaciones.
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
 publicacionesDe (_, _, []) _ = [] -- caso base
-publicacionesDe red u
- | u == usuarioDePublicacion (head pubs) = [head pubs] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
- | otherwise = [] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) u
- where pubs = publicaciones red 
+publicacionesDe red user
+    | user == usuarioDePublicacion (head pubs) = [head pubs] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) user
+    | otherwise = [] ++ publicacionesDe (usuarios red, relaciones red, tail pubs) user
+    where pubs = publicaciones red 
 
 -- tests: 
 -- publicacionesDe ([(0, "Andre"), (1, "Tazu"), (2, "Juan Pablo"), (3, "Alejo")], [], [((0,"Andre"), "", []), ((0, "Andre"), "", []), ((2,"Juan Pablo"), "",[]), ((1,"Tazu"), "", [])]) (0, "Andre")
 
 -- describir qué hace la función: dar una lista con las publicaciones que le gustaron al usuario
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
-publicacionesQueLeGustanA red u = perteneceUsuarioalaLista u (publicaciones red)            -- llamo a otra funcion que da la lista de
+publicacionesQueLeGustanA red user = proyectarPublicaciones user (publicaciones red)      -- llamo a otra funcion que da la lista de
                                                                                             -- publicaciones que le dio like el usuario
---auxiliar--
-perteneceUsuarioalaLista :: Usuario -> [Publicacion] -> [Publicacion]
-perteneceUsuarioalaLista u pub  | longitud (tail pub) == longitud pub && pertenece u (likesDePublicacion (head pub)) = pub
-                                | longitud pub <= 1 = []
-                                | likesDePublicacion (head pub) /= [] && pertenece u (likesDePublicacion (head pub)) = head pub : perteneceUsuarioalaLista u (tail pub)
-                                | otherwise = perteneceUsuarioalaLista u (tail pub)
+
+perteneceUsuarioalaLista :: Usuario -> [Publicacion] -> [Publicacion] -- "proyectarUsuarios" sería un mejor nombre para esta función
+perteneceUsuarioalaLista user pub -- el parámetro "pub" puede cambiarse por "(pub:pubs)"" para ahorrarse usar las funciones head (con "pub") y tail (con "pubs")
+    | longitud (tail pub) == longitud pub && pertenece user (likesDePublicacion (head pub)) = pub -- ¿la primera condición chequea si "pub" es una lista vacía?
+    | longitud pub <= 1 = []
+    | likesDePublicacion (head pub) /= [] && pertenece user (likesDePublicacion (head pub)) = head pub : perteneceUsuarioalaLista user (tail pub) -- no es necesario chequear si la publicación no tiene likes; la función "pertenece" ya va a reconocer que el usuario no está en la lista vacía
+    | otherwise = perteneceUsuarioalaLista user (tail pub)
+
+-- arreglo de tazu
+proyectarPublicaciones :: Usuario -> [Publicacion] -> [Publicacion] -- siento que podríamos darle un nombre mejor a esta función -tazu
+proyectarPublicaciones user [] = []
+proyectarPublicaciones user (pub:pubs)
+    | pertenece user (likesDePublicacion pub) = pub : proyectarPublicaciones user (pubs)
+    | otherwise = proyectarPublicaciones user pubs
 
 -- describir qué hace la función: .....
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
@@ -129,22 +136,22 @@ relacion2_3 = (usuario3, usuario2)
 relacion2_4 = (usuario2, usuario4)
 relacion3_4 = (usuario4, usuario3)
 
-publicacion1_1 = (usuario1, "Este es mi primer post", [usuario2, usuario4])
-publicacion1_2 = (usuario1, "Este es mi segundo post", [usuario4])
-publicacion1_3 = (usuario1, "Este es mi tercer post", [usuario2, usuario5])
-publicacion1_4 = (usuario1, "Este es mi cuarto post", [])
-publicacion1_5 = (usuario1, "Este es como mi quinto post", [usuario5])
+publicacion1_1 = (usuario1, "Este es mi primer post", [usuario2, usuario4])         -- en redA
+publicacion1_2 = (usuario1, "Este es mi segundo post", [usuario4])                  -- en redA
+publicacion1_3 = (usuario1, "Este es mi tercer post", [usuario2, usuario5])         -- en redB
+publicacion1_4 = (usuario1, "Este es mi cuarto post", [])                           -- en redB
+publicacion1_5 = (usuario1, "Este es como mi quinto post", [usuario5])              -- en redB
 
-publicacion2_1 = (usuario2, "Hello World", [usuario4])
-publicacion2_2 = (usuario2, "Good Bye World", [usuario1, usuario4])
+publicacion2_1 = (usuario2, "Hello World", [usuario4])                              -- en redA
+publicacion2_2 = (usuario2, "Good Bye World", [usuario1, usuario4])                 -- en redA
 
-publicacion3_1 = (usuario3, "Lorem Ipsum", [])
-publicacion3_2 = (usuario3, "dolor sit amet", [usuario2])
-publicacion3_3 = (usuario3, "consectetur adipiscing elit", [usuario2, usuario5])
+publicacion3_1 = (usuario3, "Lorem Ipsum", [])                                      -- en redA, en redB
+publicacion3_2 = (usuario3, "dolor sit amet", [usuario2])                           -- en redA, en redB
+publicacion3_3 = (usuario3, "consectetur adipiscing elit", [usuario2, usuario5])    -- en redB
 
-publicacion4_1 = (usuario4, "I am Alice. Not", [usuario1, usuario2])
-publicacion4_2 = (usuario4, "I am Bob", [])
-publicacion4_3 = (usuario4, "Just kidding, i am Mariela", [usuario1, usuario3])
+publicacion4_1 = (usuario4, "I am Alice. Not", [usuario1, usuario2])                -- en redA
+publicacion4_2 = (usuario4, "I am Bob", [])                                         -- en redA
+publicacion4_3 = (usuario4, "Just kidding, i am Mariela", [usuario1, usuario3])     --
 
 
 usuariosA = [usuario1, usuario2, usuario3, usuario4]
