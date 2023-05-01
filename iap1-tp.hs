@@ -168,7 +168,7 @@ compararAmigos redX (user:users)
 
 -- toma una red social, y devuelve True si tiene un usuario con mas de 1,000,000 amigos 
 estaRobertoCarlos :: RedSocial -> Bool
-estaRobertoCarlos red = ((usuarioConMasAmigos red) > 1000000)
+estaRobertoCarlos red = cantidadDeAmigos red (usuarioConMasAmigos red) > 1000000
 -- 👏👏👏 muy buena manera de resolverlo
 -- igual, la función "usuarioConMasAmigos" hace un montón de comparaciones que no son necesarias para "estaRobertoCarlos"
 -- creo que sería más eficiente una función que especificamente vea si el primer usuario de la lista "es Roberto Carlos", y si no, mirar al primero del resto de usuarios, y así recursivamente
