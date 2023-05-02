@@ -156,7 +156,7 @@ compararAmigos :: RedSocial -> [Usuario] -> Usuario
 compararAmigos redX (user:users)
     | users == [] = user
     | (cantidadDeAmigos redX user) >= (cantidadDeAmigos redX (compararAmigos redX users)) = user
-    | otherwise = (head users) -- "head" es para convertirlo de tipo "[Usuario]" a tipo "Usuario"; debe haber alguna mejor manera
+    | otherwise = (compararAmigos redX users)
 
 {- 
 555555
