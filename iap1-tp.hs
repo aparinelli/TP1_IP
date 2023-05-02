@@ -126,6 +126,8 @@ amigosDeAux (rel:rels) user
     | user == fst rel = (snd rel) : (amigosDeAux rels user) 
     | user == snd rel = (fst rel) : (amigosDeAux rels user) 
     | otherwise       = amigosDeAux rels user
+    --where restoDeAmigos = amigosDeAux rels user
+    --firma:tazu
 
 {-  
  3333
@@ -149,14 +151,15 @@ cantidadDeAmigos redX user = longitud (amigosDe redX user)
 
 -- toma una red social, y devuelve su usuario con más amigos (si varios tienen la mayor cantidad, da uno de ellos)
 usuarioConMasAmigos :: RedSocial -> Usuario
-usuarioConMasAmigos redX = compararAmigos redX (usuarios(redX))
+usuarioConMasAmigos redX = compararAmigos redX (usuarios(redX)) -- usa una función auxiliar para hacer recursión sobre la lista de usuarios fácilmente
 
 -- recursión comparando la cantidad de amigos de n-1 y n, devolviendo el que sea mayor
 compararAmigos :: RedSocial -> [Usuario] -> Usuario
 compararAmigos redX (user:users)
     | users == [] = user
-    | (cantidadDeAmigos redX user) >= (cantidadDeAmigos redX (compararAmigos redX users)) = user
-    | otherwise = (compararAmigos redX users)
+    | (cantidadDeAmigos redX user) >= (cantidadDeAmigos redX (topUserOnRight)) = user
+    | otherwise = (topUserOnRight)
+    where topUserOnRight = compararAmigos redX users
 
 {- 
 555555
@@ -169,11 +172,12 @@ compararAmigos redX (user:users)
 -- toma una red social, y devuelve True si tiene un usuario con mas de 1,000,000 amigos 
 estaRobertoCarlos :: RedSocial -> Bool
 estaRobertoCarlos red = cantidadDeAmigos red (usuarioConMasAmigos red) > 1000000
+
 -- 👏👏👏 muy buena manera de resolverlo
 -- igual, la función "usuarioConMasAmigos" hace un montón de comparaciones que no son necesarias para "estaRobertoCarlos"
 -- creo que sería más eficiente una función que especificamente vea si el primer usuario de la lista "es Roberto Carlos", y si no, mirar al primero del resto de usuarios, y así recursivamente
 -- apenas encuentre alguien con más de un millón de amigos, daría True; tardaría como mucho n pasos, pero podría tardar 1 paso
--- "usuarioConMasAmigos necesita ver sí o sí todos los usuarios y para hacer comparaciones tarda sí o sí 2n-1 pasos maso; el doble 
+-- "usuarioConMasAmigos" necesita ver sí o sí todos los usuarios y para hacer comparaciones tarda sí o sí 2n-1 pasos maso; el doble 
 -- firma: tazu 
 
 {- 
@@ -191,6 +195,8 @@ publicacionesDe red user
     | user == usuarioDePublicacion pub = [pub] ++ publicacionesDe (usuarios red, relaciones red, pubs) user
     | otherwise = [] ++ publicacionesDe (usuarios red, relaciones red, pubs) user
     where (pub:pubs) = publicaciones red
+    --where restoDePubsDeUser = publicacionesDe (usuarios red, relaciones red, pubs) user
+    --firma: tazu
 
 -- tests: 
 -- publicacionesDe ([(0, "Andre"), (1, "Tazu"), (2, "Juan Pablo"), (3, "Alejo")], [], [((0,"Andre"), "", []), ((0, "Andre"), "", []), ((2,"Juan Pablo"), "",[]), ((1,"Tazu"), "", [])]) (0, "Andre")
