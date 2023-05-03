@@ -281,36 +281,28 @@ likeoTodasLasPubs (pub:pubs) user
 111111  0000
 -}
 
--- Dada una red social y un user1 y un user2, decide si hay
--- una cadena de relaciones que comienza con user1 y termina con user2
--- en la red social.
+-- Dada una red social y un user1 y un user2, decide si existe
+-- alguna cadena de relaciones que cominece con user1 y termine con user2.
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
-existeSecuenciaDeAmigos red user1 user2
-    | relaciones red == [] = False
-    | pertenece user2 (amigosDe red user1) = True
-    | otherwise = existeSecuenciaDeAmigosAux red (amigosDe red user1) user2
+existeSecuenciaDeAmigos red user1 user2 = existeSecuenciaDeAmigosAux redSinUser (amigosDe red user1) user2
+    where redSinUser = (usuarios red, quitarRelacionesCon user1 (relaciones red), publicaciones red)
 
--- Va eliminando relaciones de la red hasta vaciarla. 
--- Si llegó a vaciarse, devuelve False, pues quiere decir que
--- no encontró una cadena de amigos que termine con user2.
--- Sino, devuelve True.
+-- Recorre recursivamente las relaciones de la red, quitando las ya visitadas
+-- hasta encontrar (o no) a user2.
 existeSecuenciaDeAmigosAux :: RedSocial -> [Usuario] -> Usuario -> Bool
 existeSecuenciaDeAmigosAux _ [] _ = False
 existeSecuenciaDeAmigosAux red (user:users) user2
     | relaciones red == [] = False
-    | pertenece user2 (amigosDe red user) = True
-    | otherwise = existeSecuenciaDeAmigosAux redSinUser users user2 || existeSecuenciaDeAmigosAux redSinUser (amigosDe redSinUser user) user2
+    | pertenece user2 (user:users) = True
+    | otherwise = existeSecuenciaDeAmigosAux redSinUser users user2 || existeSecuenciaDeAmigosAux redSinUser (amigosDe red user) user2
     where redSinUser = (usuarios red, quitarRelacionesCon user (relaciones red), publicaciones red)
 
--- Elimina todas las relaciones de la lista que contienen a user.
+-- Elimina todas las relaciones de la lista que incluyen a user.
 quitarRelacionesCon :: Usuario -> [Relacion] -> [Relacion]
 quitarRelacionesCon _ [] = []
 quitarRelacionesCon user (rel:rels) 
     | user == fst rel || user == snd rel = quitarRelacionesCon user rels
     | otherwise = rel : quitarRelacionesCon user rels
-
--- [(A,B) (C,D)]
--- 
 
 {-
                                /$$ /$$ /$$                                        
