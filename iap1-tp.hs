@@ -120,8 +120,9 @@ proyectarNombres (user:users) = (nombreDeUsuario user) : (proyectarNombres users
 amigosDe :: RedSocial -> Usuario -> [Usuario]
 amigosDe red user = amigosDeAux (relaciones red) user
 
+-- Creo una funcion auxiliar que haga recursión unicamente sobre los elementos que me interesan de la red social
 amigosDeAux :: [Relacion] -> Usuario -> [Usuario]
-amigosDeAux [] _ = []
+amigosDeAux [] _ = [] -- Caso base
 amigosDeAux (rel:rels) user 
     | user == fst rel = (snd rel) : (amigosDeAux rels user) 
     | user == snd rel = (fst rel) : (amigosDeAux rels user) 
