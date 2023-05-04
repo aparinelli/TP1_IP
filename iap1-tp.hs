@@ -285,8 +285,7 @@ likeoTodasLasPubs (pub:pubs) user
 -- Dada una red social y un user1 y un user2, decide si existe
 -- alguna cadena de relaciones que cominece con user1 y termine con user2.
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
-existeSecuenciaDeAmigos red user1 user2 = existeSecuenciaDeAmigosAux redSinUser (amigosDe red user1) user2
-    where redSinUser = (usuarios red, quitarRelacionesCon user1 (relaciones red), publicaciones red)
+existeSecuenciaDeAmigos red user1 user2 = existeSecuenciaDeAmigosAux red (amigosDe red user1) user2
 
 -- Recorre recursivamente las relaciones de la red, quitando las ya visitadas
 -- hasta encontrar (o no) a user2.
@@ -382,7 +381,7 @@ publicacion4_3 = (usuario4, "Just kidding, i am Mariela", [usuario1, usuario3])
 
 
 usuariosA = [usuario1, usuario2, usuario3, usuario4]
-relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4]
+relacionesA = [relacion1_2, relacion3_4]
 publicacionesA = [publicacion1_1, publicacion1_2, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
 redA = (usuariosA, relacionesA, publicacionesA)
 
