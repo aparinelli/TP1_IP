@@ -124,11 +124,10 @@ amigosDe red user = amigosDeAux (relaciones red) user
 amigosDeAux :: [Relacion] -> Usuario -> [Usuario]
 amigosDeAux [] _ = [] -- Caso base
 amigosDeAux (rel:rels) user 
-    | user == fst rel = (snd rel) : (amigosDeAux rels user) 
-    | user == snd rel = (fst rel) : (amigosDeAux rels user) 
-    | otherwise       = amigosDeAux rels user
-    --where restoDeAmigos = amigosDeAux rels user
-    --firma:tazu
+    | user == fst rel = (snd rel) : restoDeAmigos 
+    | user == snd rel = (fst rel) : restoDeAmigos 
+    | otherwise       = restoDeAmigos
+    where restoDeAmigos = amigosDeAux rels user
 
 {-  
  3333
@@ -220,6 +219,7 @@ proyectarPublicaciones _ [] = []
 proyectarPublicaciones user (pub:pubs)
     | pertenece user (likesDePublicacion pub) = pub : proyectarPublicaciones user pubs --verifico que el user le dio like
     | otherwise = proyectarPublicaciones user pubs                                     --si el user no dio like sigo comprobando con el resto de pubs  
+    -- where restoDePubs = proyectarPublicaciones user pubs
 
 {- 
  8888
@@ -254,18 +254,13 @@ seguidorFielEnPublicaciones [] _ = False                                 --le di
 seguidorFielEnPublicaciones pubs (user:users)                            --de no ser asi, prueba con el siguiente usuario de la lista
     | likeoTodasLasPubs pubs user = True                                         
     | not (likeoTodasLasPubs pubs user) = seguidorFielEnPublicaciones pubs users
-    -- creo que queda mejor usar "otherwise" en vez de "not (likeoTodasLasPibs pub user)"
-    -- firma: tazu
 
-    -- para mi el codigo es mas "expresivo" si lo dejamos asi, pq no es que en cualquier
-    -- otro caso haces "seguidorFielEnPublicaciones" solo si el ultimo user no era el seguidor fiel
-    -- firma: juanpa
-    
-    -- no es necesario especificar tanto si se entiende bien; resumir muchas veces facilita la lectura; pensalo como texto:
-    -- "si el usuario likeo todas las publicaciones de esta lista de publicaciones, esto; si el usuario no likeo todas las publicaciones de esta lista de publicaciones, esto otro"
-    -- "si el usuario likeo todas las publicaciones de esta lista de publicaciones, esto; si no, esto otro"
-    -- o sea, si no se cumple la primera condición, entonces entra en la categoría "cualquier otro caso"; literalmente es "otherwise"
-    -- firma: tazu
+-- arreglo de tazu
+{- seguidorFielEnPublicaciones :: [Publicacion] -> [Usuario] -> Bool
+seguidorFielEnPublicaciones _ [] = False
+seguidorFielEnPublicaciones [] _ = False
+seguidorFielEnPublicaciones pubs (user:users) = likeoTodasLasPubs pubs user || seguidorFielEnPublicaciones pubs users -}
+
 
 likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
 likeoTodasLasPubs (pub:pubs) user
@@ -273,6 +268,10 @@ likeoTodasLasPubs (pub:pubs) user
     | pertenece user (likesDePublicacion pub) = likeoTodasLasPubs pubs user   --a la lista de likes de cada publicacion de un lista
     | otherwise = False
 
+--arreglo de tazu
+{- likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
+likeoTodasLasPubs [] _ = True -- la consigna indica que para una lista vacía de publicaciones debería dar negativo, pero no es problema porque ya está cubierto por un condicional en "seguidorFielEnPublicaciones"
+likeoTodasLasPubs (pub:pubs) user = pertenece user (likesDePublicacion pub) && likeoTodasLasPubs pubs user -}
 
 {- 
 1111    0000
@@ -303,6 +302,8 @@ quitarRelacionesCon _ [] = []
 quitarRelacionesCon user (rel:rels) 
     | user == fst rel || user == snd rel = quitarRelacionesCon user rels
     | otherwise = rel : quitarRelacionesCon user rels
+    --where relsSinUser = quitarRelacionesCon user rels
+    --firma: tazu 
 
 {-
                                /$$ /$$ /$$                                        
