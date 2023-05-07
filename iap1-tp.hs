@@ -149,7 +149,7 @@ cantidadDeAmigos redX user = longitud (amigosDe redX user)
     44
 -}
 
--- toma una red social, y devuelve su usuario con más amigos (si varios tienen la mayor cantidad, da uno de ellos)
+-- Dada una red social, devuelve su usuario con más amigos (si varios tienen la mayor cantidad, da uno de ellos)
 usuarioConMasAmigos :: RedSocial -> Usuario
 usuarioConMasAmigos redX = compararAmigos redX (usuarios(redX)) -- usa una función auxiliar para hacer recursión sobre la lista de usuarios fácilmente
 
@@ -195,8 +195,7 @@ publicacionesDe red user
     | user == usuarioDePublicacion pub = [pub] ++ publicacionesDe (usuarios red, relaciones red, pubs) user
     | otherwise = [] ++ publicacionesDe (usuarios red, relaciones red, pubs) user
     where (pub:pubs) = publicaciones red
-    --where restoDePubsDeUser = publicacionesDe (usuarios red, relaciones red, pubs) user
-    --firma: tazu
+          restoDePubsDeUser = publicacionesDe (usuarios red, relaciones red, pubs) user
 
 -- tests: 
 -- publicacionesDe ([(0, "Andre"), (1, "Tazu"), (2, "Juan Pablo"), (3, "Alejo")], [], [((0,"Andre"), "", []), ((0, "Andre"), "", []), ((2,"Juan Pablo"), "",[]), ((1,"Tazu"), "", [])]) (0, "Andre")
@@ -229,7 +228,7 @@ proyectarPublicaciones user (pub:pubs)
  8888
 -}
 
--- Devuelce True si dos usuarios le dieron like a exactamente las mismas publicaciones de una red
+-- Dados dos usuarios, devuelve True si le dieron like a exactamente las mismas publicaciones de una red.
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
 lesGustanLasMismasPublicaciones red user1 user2 = publicacionesQueLeGustanA red user1 == publicacionesQueLeGustanA red user2
 
@@ -281,13 +280,11 @@ likeoTodasLasPubs (pub:pubs) user = pertenece user (likesDePublicacion pub) && l
 111111  0000
 -}
 
--- Dada una red social y un user1 y un user2, decide si existe
--- alguna cadena de relaciones que cominece con user1 y termine con user2.
+-- Dada una red social y un user1 y un user2, devuelve True si existe alguna cadena de relaciones que cominece con user1 y termine con user2.
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
 existeSecuenciaDeAmigos red user1 user2 = existeSecuenciaDeAmigosAux red (amigosDe red user1) user2
 
--- Recorre recursivamente las relaciones de la red, quitando las ya visitadas
--- hasta encontrar (o no) a user2.
+-- Recorre recursivamente las relaciones de la red, quitando las ya visitadas hasta encontrar (o no) a user2.
 existeSecuenciaDeAmigosAux :: RedSocial -> [Usuario] -> Usuario -> Bool
 existeSecuenciaDeAmigosAux _ [] _ = False
 existeSecuenciaDeAmigosAux red (user:users) user2
@@ -300,10 +297,9 @@ existeSecuenciaDeAmigosAux red (user:users) user2
 quitarRelacionesCon :: Usuario -> [Relacion] -> [Relacion]
 quitarRelacionesCon _ [] = []
 quitarRelacionesCon user (rel:rels) 
-    | user == fst rel || user == snd rel = quitarRelacionesCon user rels
-    | otherwise = rel : quitarRelacionesCon user rels
-    --where relsSinUser = quitarRelacionesCon user rels
-    --firma: tazu 
+    | user == fst rel || user == snd rel = relsSinUser
+    | otherwise = rel : relsSinUser
+    where relsSinUser = quitarRelacionesCon user rels
 
 {-
                                /$$ /$$ /$$                                        
@@ -382,7 +378,7 @@ publicacion4_3 = (usuario4, "Just kidding, i am Mariela", [usuario1, usuario3])
 
 
 usuariosA = [usuario1, usuario2, usuario3, usuario4]
-relacionesA = [relacion1_2, relacion3_4]
+relacionesA = [relacion1_2, relacion1_4, relacion2_3, relacion2_4, relacion3_4]
 publicacionesA = [publicacion1_1, publicacion1_2, publicacion2_1, publicacion2_2, publicacion3_1, publicacion3_2, publicacion4_1, publicacion4_2]
 redA = (usuariosA, relacionesA, publicacionesA)
 

@@ -1,0 +1,53 @@
+
+
+10. 
+Problema a testear: existeSecuenciaDeAmigos
+** Factores:
+    - red
+        - ¿Cumple con RedSocialValida?
+            - Sí
+            - No (ERROR)  
+    - user1 y user2
+        - ¿Pertenecen a red?
+            - Sí
+            - No (ERROR)
+    - Relación entre red y user1
+        - ¿Pertenece user1 a red?
+            - Sí
+            - No (ERROR)
+
+** Tests:
+
+usuario1 = (1,"Alejo")
+usuario2 = (2,"André")
+usuario3 = (3,"Juan")
+usuario4 = (4,"Tazu")
+
+Constantes: 
+Usuarios: [usuario1,usuario2,usuario3,usuario4]
+Publicaciones: []
+
+(1)
+Relaciones: [(usuario1, usuario2),(usuario2, usuario3),(usuario3,usuario4)]
+user1 = usuario1
+user2 = usuario4
+res = True
+
+(2)
+Relaciones: [(usuario1, usuario2), (usuario3, usuario4)]
+user1 = usuario1
+user2 = usuario4
+res = False
+
+(3)
+Relaciones: [(usuario1, usuario2)]
+user1 = usuario1
+user2 = usuario2
+res = True
+
+(4)
+Relaciones: [(usuario2, usuario3)]
+user1 = usuario1
+user2 = usuario2
+res = False
+
