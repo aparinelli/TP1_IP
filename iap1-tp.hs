@@ -108,6 +108,15 @@ proyectarNombres :: [Usuario] -> [String]
 proyectarNombres [] = []
 proyectarNombres (user:users) = (nombreDeUsuario user) : (proyectarNombres users)
 
+-- variante usando solo una función
+{- 
+nombresDeUsuarios1 :: RedSocial -> [String]
+nombresDeUsuarios1 ([],_,_) = []
+nombresDeUsuarios1 redX = (nombreDeUsuario user) : restoDeNombres
+    where (user:users) = usuarios redX
+          restoDeNombres = (nombresDeUsuarios1 (users, relaciones redX, publicaciones redX))
+ -}
+
 {-  
  2222
 22  22
@@ -192,8 +201,8 @@ estaRobertoCarlos red = cantidadDeAmigos red (usuarioConMasAmigos red) > 1000000
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
 publicacionesDe (_, _, []) _ = [] -- caso base
 publicacionesDe red user
-    | user == usuarioDePublicacion pub = [pub] ++ publicacionesDe (usuarios red, relaciones red, pubs) user
-    | otherwise = [] ++ publicacionesDe (usuarios red, relaciones red, pubs) user
+    | user == usuarioDePublicacion pub = [pub] ++ restoDePubsDeUser
+    | otherwise = [] ++ restoDePubsDeUser
     where (pub:pubs) = publicaciones red
           restoDePubsDeUser = publicacionesDe (usuarios red, relaciones red, pubs) user
 
@@ -216,9 +225,9 @@ publicacionesQueLeGustanA red user = proyectarPublicaciones user (publicaciones 
 proyectarPublicaciones :: Usuario -> [Publicacion] -> [Publicacion]
 proyectarPublicaciones _ [] = []
 proyectarPublicaciones user (pub:pubs)
-    | pertenece user (likesDePublicacion pub) = pub : proyectarPublicaciones user pubs --verifico que el user le dio like
-    | otherwise = proyectarPublicaciones user pubs                                     --si el user no dio like sigo comprobando con el resto de pubs  
-    -- where restoDePubs = proyectarPublicaciones user pubs
+    | pertenece user (likesDePublicacion pub) = pub : restoDePubs --verifico que el user le dio like
+    | otherwise = restoDePubs                                                          --si el user no dio like sigo comprobando con el resto de pubs  
+    where restoDePubs = proyectarPublicaciones user pubs
 
 {- 
  8888
@@ -255,10 +264,12 @@ seguidorFielEnPublicaciones pubs (user:users)                            --de no
     | not (likeoTodasLasPubs pubs user) = seguidorFielEnPublicaciones pubs users
 
 -- arreglo de tazu
-{- seguidorFielEnPublicaciones :: [Publicacion] -> [Usuario] -> Bool
+{-
+seguidorFielEnPublicaciones :: [Publicacion] -> [Usuario] -> Bool
 seguidorFielEnPublicaciones _ [] = False
 seguidorFielEnPublicaciones [] _ = False
-seguidorFielEnPublicaciones pubs (user:users) = likeoTodasLasPubs pubs user || seguidorFielEnPublicaciones pubs users -}
+seguidorFielEnPublicaciones pubs (user:users) = likeoTodasLasPubs pubs user || seguidorFielEnPublicaciones pubs users
+-}
 
 
 likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
@@ -268,9 +279,11 @@ likeoTodasLasPubs (pub:pubs) user
     | otherwise = False
 
 --arreglo de tazu
-{- likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
+{-
+likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
 likeoTodasLasPubs [] _ = True -- la consigna indica que para una lista vacía de publicaciones debería dar negativo, pero no es problema porque ya está cubierto por un condicional en "seguidorFielEnPublicaciones"
-likeoTodasLasPubs (pub:pubs) user = pertenece user (likesDePublicacion pub) && likeoTodasLasPubs pubs user -}
+likeoTodasLasPubs (pub:pubs) user = pertenece user (likesDePublicacion pub) && likeoTodasLasPubs pubs user
+-}
 
 {- 
 1111    0000
