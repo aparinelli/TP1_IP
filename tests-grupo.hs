@@ -107,18 +107,12 @@ espero recibir True
 
 ---
 9.
-en la redC el usuario7 le dio like a todas las publicaciones de usuario 8
-entonces de la funcion espero recibir true
 
-"tieneUnSeguidorFiel redC usuario8" devuelve "True"
+”El usuario no publico ” ˜ : (tieneUnSeguidorFiel redD usuario6) ˜?= False
+”Existe 1 Pub. sin likes ” ˜ : (tieneUnSeguidorFiel redC usuario6) ˜?= False
+”Hay 1 seguidor fiel ” ˜ : (tieneUnSeguidorFiel redC usuario8) ˜?= True
+”No hay 1 seguidor fiel ” ˜ : (tieneUnSeguidorFiel redD usuario8) ˜?= False
 
-pero en la redD el usuario7 le dio like a todas las publicaciones de usuario8 
-salvo 1, espero que la fauncion me devuelva "False" ya que no hay usuarios que
-le hayan dado like a todas las publicaicones de usuario8 en esa red a pesar de
-que usuario8 le dio like a todas sus propias publicaciones
-(un usuario no puede ser su propio seguidor fiel)
-
-"tieneUnSeguidorFiel redD usuario8" devuelve "False"
 
 ---------------------------tests 7, 8 y 9 fueron basados en :--------------------------------
 usuario6 = (6,"Alejo")
