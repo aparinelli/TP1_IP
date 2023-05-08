@@ -225,8 +225,8 @@ publicacionesQueLeGustanA red user = proyectarPublicaciones user (publicaciones 
 proyectarPublicaciones :: Usuario -> [Publicacion] -> [Publicacion]
 proyectarPublicaciones _ [] = []
 proyectarPublicaciones user (pub:pubs)
-    | pertenece user (likesDePublicacion pub) = pub : restoDePubs --verifico que el user le dio like
-    | otherwise = restoDePubs                                                          --si el user no dio like sigo comprobando con el resto de pubs  
+    | pertenece user (likesDePublicacion pub) = pub : restoDePubs       --verifico que el user le dio like
+    | otherwise = restoDePubs                                           --si el user no dio like sigo comprobando con el resto de pubs  
     where restoDePubs = proyectarPublicaciones user pubs
 
 {- 
@@ -281,8 +281,11 @@ likeoTodasLasPubs (pub:pubs) user
 --arreglo de tazu
 {-
 likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
-likeoTodasLasPubs [] _ = True -- la consigna indica que para una lista vacía de publicaciones debería dar negativo, pero no es problema porque ya está cubierto por un condicional en "seguidorFielEnPublicaciones"
+likeoTodasLasPubs [] _ = True
 likeoTodasLasPubs (pub:pubs) user = pertenece user (likesDePublicacion pub) && likeoTodasLasPubs pubs user
+
+-- la consigna indica que para una lista vacía de publicaciones debería dar negativo
+-- pero no es problema porque ya está cubierto por un condicional en "seguidorFielEnPublicaciones"
 -}
 
 {- 
