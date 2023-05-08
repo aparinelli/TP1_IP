@@ -1,36 +1,17 @@
-
-{-
-           /$$                                               /$$              
-          | $$                                              | $$              
-  /$$$$$$$| $$  /$$$$$$  /$$$$$$/$$$$   /$$$$$$  /$$$$$$$  /$$$$$$    /$$$$$$ 
- /$$_____/| $$ /$$__  $$| $$_  $$_  $$ /$$__  $$| $$__  $$|_  $$_/   /$$__  $$
-| $$      | $$| $$$$$$$$| $$ \ $$ \ $$| $$$$$$$$| $$  \ $$  | $$    | $$$$$$$$
-| $$      | $$| $$_____/| $$ | $$ | $$| $$_____/| $$  | $$  | $$ /$$| $$_____/
-|  $$$$$$$| $$|  $$$$$$$| $$ | $$ | $$|  $$$$$$$| $$  | $$  |  $$$$/|  $$$$$$$
- \_______/|__/ \_______/|__/ |__/ |__/ \_______/|__/  |__/   \___/   \_______/
--}
-
 -- Nombre de Grupo: Clemente
 -- Integrante 1: André Viollaz, andre.viollaz@gmail.com,      870/23
 -- Integrante 2: Alejo Parinelli,   alejoparinelli@gmail.com, 115/23
 -- Integrante 3: Juan Pablo Tarela, juanptarela@gmail.com,    151/23
 -- Integrante 4: Mateo Otazúa Arce, tazuarce@gmail.com,       88/23
 
-
-
-
 {- 
-   /$$     /$$                              
-  | $$    |__/                              
- /$$$$$$   /$$  /$$$$$$   /$$$$$$   /$$$$$$$
-|_  $$_/  | $$ /$$__  $$ /$$__  $$ /$$_____/
-  | $$    | $$| $$  \ $$| $$  \ $$|  $$$$$$ 
-  | $$ /$$| $$| $$  | $$| $$  | $$ \____  $$
-  |  $$$$/| $$| $$$$$$$/|  $$$$$$/ /$$$$$$$/
-   \___/  |__/| $$____/  \______/ |_______/ 
-              | $$                          
-              | $$                          
-              |__/                          
+
+████████ ██ ██████   ██████  ███████ 
+   ██    ██ ██   ██ ██    ██ ██      
+   ██    ██ ██████  ██    ██ ███████ 
+   ██    ██ ██      ██    ██      ██ 
+   ██    ██ ██       ██████  ███████     
+
 -}
 
 type Usuario = (Integer, String) -- (id, nombre)
@@ -38,18 +19,14 @@ type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
 type Publicacion = (Usuario, String, [Usuario]) -- (usuario que publica, texto publicacion, likes)
 type RedSocial = ([Usuario], [Relacion], [Publicacion])
 
-
-
-
 {-
- /$$                           /$$                              
-| $$                          |__/                              
-| $$$$$$$   /$$$$$$   /$$$$$$$ /$$  /$$$$$$$  /$$$$$$   /$$$$$$$
-| $$__  $$ |____  $$ /$$_____/| $$ /$$_____/ |____  $$ /$$_____/
-| $$  \ $$  /$$$$$$$|  $$$$$$ | $$| $$        /$$$$$$$|  $$$$$$ 
-| $$  | $$ /$$__  $$ \____  $$| $$| $$       /$$__  $$ \____  $$
-| $$$$$$$/|  $$$$$$$ /$$$$$$$/| $$|  $$$$$$$|  $$$$$$$ /$$$$$$$/
-|_______/  \_______/|_______/ |__/ \_______/ \_______/|_______/ 
+
+██████   █████  ███████ ██  ██████  █████  ███████ 
+██   ██ ██   ██ ██      ██ ██      ██   ██ ██      
+██████  ███████ ███████ ██ ██      ███████ ███████ 
+██   ██ ██   ██      ██ ██ ██      ██   ██      ██ 
+██████  ██   ██ ███████ ██  ██████ ██   ██ ███████ 
+ 
 -}
 
 usuarios :: RedSocial -> [Usuario]
@@ -73,32 +50,18 @@ usuarioDePublicacion (u, _, _) = u
 likesDePublicacion :: Publicacion -> [Usuario]
 likesDePublicacion (_, _, us) = us
 
-
-
-
-
 {- 
-                                             /$$           /$$                    
-                                            |__/          |__/                    
-  /$$$$$$  /$$  /$$$$$$   /$$$$$$   /$$$$$$$ /$$  /$$$$$$$ /$$  /$$$$$$   /$$$$$$$
- /$$__  $$|__/ /$$__  $$ /$$__  $$ /$$_____/| $$ /$$_____/| $$ /$$__  $$ /$$_____/
-| $$$$$$$$ /$$| $$$$$$$$| $$  \__/| $$      | $$| $$      | $$| $$  \ $$|  $$$$$$ 
-| $$_____/| $$| $$_____/| $$      | $$      | $$| $$      | $$| $$  | $$ \____  $$
-|  $$$$$$$| $$|  $$$$$$$| $$      |  $$$$$$$| $$|  $$$$$$$| $$|  $$$$$$/ /$$$$$$$/
- \_______/| $$ \_______/|__/       \_______/|__/ \_______/|__/ \______/ |_______/ 
-     /$$  | $$                                                                    
-    |  $$$$$$/                                                                    
-     \______/                                                                     
+
+███████      ██ ███████ ██████   ██████ ██  ██████ ██  ██████  ███████ 
+██           ██ ██      ██   ██ ██      ██ ██      ██ ██    ██ ██      
+█████        ██ █████   ██████  ██      ██ ██      ██ ██    ██ ███████ 
+██      ██   ██ ██      ██   ██ ██      ██ ██      ██ ██    ██      ██ 
+███████  █████  ███████ ██   ██  ██████ ██  ██████ ██  ██████  ███████      
+
 -}
 
 
-{- 
-1111
-  11
-  11
-  11
-111111 
--}
+{- 1 -}
 
 -- recibe una red social y hace una lista con los nombres de los usuarios de esa red
 nombresDeUsuarios :: RedSocial -> [String]
@@ -108,22 +71,7 @@ proyectarNombres :: [Usuario] -> [String]
 proyectarNombres [] = []
 proyectarNombres (user:users) = (nombreDeUsuario user) : (proyectarNombres users)
 
--- variante usando solo una función
-{- 
-nombresDeUsuarios1 :: RedSocial -> [String]
-nombresDeUsuarios1 ([],_,_) = []
-nombresDeUsuarios1 redX = (nombreDeUsuario user) : restoDeNombres
-    where (user:users) = usuarios redX
-          restoDeNombres = (nombresDeUsuarios1 (users, relaciones redX, publicaciones redX))
- -}
-
-{-  
- 2222
-22  22
-   22
-  22
-222222 
--}
+{- 2 -}
 
 -- Toma una red social junto con un usuario dentro de esta, y devuelve una lista de los usuarios con quien se relaciona. 
 amigosDe :: RedSocial -> Usuario -> [Usuario]
@@ -138,25 +86,13 @@ amigosDeAux (rel:rels) user
     | otherwise       = restoDeAmigos
     where restoDeAmigos = amigosDeAux rels user
 
-{-  
- 3333
-33  33
-   333
-33  33
- 3333 
--}
+{- 3 -}
 
 -- toma un usuario en una red social e indica la cantidad de amigos que tiene
 cantidadDeAmigos :: RedSocial -> Usuario -> Int
 cantidadDeAmigos redX user = longitud (amigosDe redX user)
 
-{- 
-44  44
-44  44
-444444
-    44
-    44
--}
+{- 4 -}
 
 -- Dada una red social, devuelve su usuario con más amigos (si varios tienen la mayor cantidad, da uno de ellos)
 usuarioConMasAmigos :: RedSocial -> Usuario
@@ -170,32 +106,13 @@ compararAmigos redX (user:users)
     | otherwise = (topUserOnRight)
     where topUserOnRight = compararAmigos redX users
 
-{- 
-555555
-55
-55555
-    55
-55555
--}
+{- 5 -}
 
 -- toma una red social, y devuelve True si tiene un usuario con mas de 1,000,000 amigos 
 estaRobertoCarlos :: RedSocial -> Bool
 estaRobertoCarlos red = cantidadDeAmigos red (usuarioConMasAmigos red) > 1000000
 
--- 👏👏👏 muy buena manera de resolverlo
--- igual, la función "usuarioConMasAmigos" hace un montón de comparaciones que no son necesarias para "estaRobertoCarlos"
--- creo que sería más eficiente una función que especificamente vea si el primer usuario de la lista "es Roberto Carlos", y si no, mirar al primero del resto de usuarios, y así recursivamente
--- apenas encuentre alguien con más de un millón de amigos, daría True; tardaría como mucho n pasos, pero podría tardar 1 paso
--- "usuarioConMasAmigos" necesita ver sí o sí todos los usuarios y para hacer comparaciones tarda sí o sí 2n-1 pasos maso; el doble 
--- firma: tazu 
-
-{- 
- 6666
-66
-66666
-66  66
- 6666
--}
+{- 6 -}
 
 -- Recibe una red social y un usuario perteneciente a la red social y devuelve una lista con todas sus publicaciones.
 publicacionesDe :: RedSocial -> Usuario -> [Publicacion]
@@ -209,13 +126,7 @@ publicacionesDe red user
 -- tests: 
 -- publicacionesDe ([(0, "Andre"), (1, "Tazu"), (2, "Juan Pablo"), (3, "Alejo")], [], [((0,"Andre"), "", []), ((0, "Andre"), "", []), ((2,"Juan Pablo"), "",[]), ((1,"Tazu"), "", [])]) (0, "Andre")
 
-{- 
-777777
-   77
-  77
- 77
-77
--}
+{- 7 -}
 
 -- Dar una lista con las publicaciones que le gustaron al usuario
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
@@ -229,25 +140,13 @@ proyectarPublicaciones user (pub:pubs)
     | otherwise = restoDePubs                                           --si el user no dio like sigo comprobando con el resto de pubs  
     where restoDePubs = proyectarPublicaciones user pubs
 
-{- 
- 8888
-88  88
- 8888
-88  88
- 8888
--}
+{- 8 -}
 
 -- Dados dos usuarios, devuelve True si le dieron like a exactamente las mismas publicaciones de una red.
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
 lesGustanLasMismasPublicaciones red user1 user2 = publicacionesQueLeGustanA red user1 == publicacionesQueLeGustanA red user2
 
-{- 
- 9999
-99  99
- 99999
-    99
- 9999
--}
+{- 9 -}
 
 -- Me dan una red y un usuario y tengo que definir si en las publicaciones de ese ususario en esa red hay otro usuario2 que le dio like a sus publicaciones
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
@@ -256,6 +155,7 @@ tieneUnSeguidorFiel red user = seguidorFielEnPublicaciones (publicacionesDe red 
 
 -- auxiliar --
 
+-- original
 seguidorFielEnPublicaciones :: [Publicacion] -> [Usuario] -> Bool
 seguidorFielEnPublicaciones _ [] = False                                 --por la funcion likeoTodasLasPubs verifica si un usuario
 seguidorFielEnPublicaciones [] _ = False                                 --le dio like a todas las publicaciones de la lista.
@@ -263,38 +163,13 @@ seguidorFielEnPublicaciones pubs (user:users)                            --de no
     | likeoTodasLasPubs pubs user = True                                         
     | not (likeoTodasLasPubs pubs user) = seguidorFielEnPublicaciones pubs users
 
--- arreglo de tazu
-{-
-seguidorFielEnPublicaciones :: [Publicacion] -> [Usuario] -> Bool
-seguidorFielEnPublicaciones _ [] = False
-seguidorFielEnPublicaciones [] _ = False
-seguidorFielEnPublicaciones pubs (user:users) = likeoTodasLasPubs pubs user || seguidorFielEnPublicaciones pubs users
--}
-
-
 likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
 likeoTodasLasPubs (pub:pubs) user
     | pubs == [] && pertenece user (likesDePublicacion pub) = True            --esta funcion verifica si un usuario pertenece
     | pertenece user (likesDePublicacion pub) = likeoTodasLasPubs pubs user   --a la lista de likes de cada publicacion de un lista
     | otherwise = False
 
---arreglo de tazu
-{-
-likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
-likeoTodasLasPubs [] _ = True
-likeoTodasLasPubs (pub:pubs) user = pertenece user (likesDePublicacion pub) && likeoTodasLasPubs pubs user
-
--- la consigna indica que para una lista vacía de publicaciones debería dar negativo
--- pero no es problema porque ya está cubierto por un condicional en "seguidorFielEnPublicaciones"
--}
-
-{- 
-1111    0000
-  11   00  00
-  11   00  00
-  11   00  00
-111111  0000
--}
+{- 10 -}
 
 -- Dada una red social y un user1 y un user2, devuelve True si existe alguna cadena de relaciones que cominece con user1 y termine con user2.
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
@@ -318,14 +193,13 @@ quitarRelacionesCon user (rel:rels)
     where relsSinUser = quitarRelacionesCon user rels
 
 {-
-                               /$$ /$$ /$$                                        
-                              |__/| $$|__/                                        
-  /$$$$$$  /$$   /$$ /$$   /$$ /$$| $$ /$$  /$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$$
- |____  $$| $$  | $$|  $$ /$$/| $$| $$| $$ |____  $$ /$$__  $$ /$$__  $$ /$$_____/
-  /$$$$$$$| $$  | $$ \  $$$$/ | $$| $$| $$  /$$$$$$$| $$  \__/| $$$$$$$$|  $$$$$$ 
- /$$__  $$| $$  | $$  >$$  $$ | $$| $$| $$ /$$__  $$| $$      | $$_____/ \____  $$
-|  $$$$$$$|  $$$$$$/ /$$/\  $$| $$| $$| $$|  $$$$$$$| $$      |  $$$$$$$ /$$$$$$$/
- \_______/ \______/ |__/  \__/|__/|__/|__/ \_______/|__/       \_______/|_______/             
+
+ █████  ██    ██ ██   ██ ██ ██      ██  █████  ██████  ███████ ███████ 
+██   ██ ██    ██  ██ ██  ██ ██      ██ ██   ██ ██   ██ ██      ██      
+███████ ██    ██   ███   ██ ██      ██ ███████ ██████  █████   ███████ 
+██   ██ ██    ██  ██ ██  ██ ██      ██ ██   ██ ██   ██ ██           ██ 
+██   ██  ██████  ██   ██ ██ ███████ ██ ██   ██ ██   ██ ███████ ███████    
+
 -}
 
 
@@ -345,20 +219,14 @@ quitar n (x:xs)
 
 
 
-
-
-
-
-
 {- 
-   /$$                           /$$             
-  | $$                          | $$             
- /$$$$$$    /$$$$$$   /$$$$$$$ /$$$$$$   /$$$$$$$
-|_  $$_/   /$$__  $$ /$$_____/|_  $$_/  /$$_____/
-  | $$    | $$$$$$$$|  $$$$$$   | $$   |  $$$$$$ 
-  | $$ /$$| $$_____/ \____  $$  | $$ /$$\____  $$
-  |  $$$$/|  $$$$$$$ /$$$$$$$/  |  $$$$//$$$$$$$/
-   \___/   \_______/|_______/    \___/ |_______/ 
+
+████████ ███████ ███████ ████████ ███████ 
+   ██    ██      ██         ██    ██      
+   ██    █████   ███████    ██    ███████ 
+   ██    ██           ██    ██         ██ 
+   ██    ███████ ███████    ██    ███████ 
+
 -}
 
 
