@@ -7,6 +7,7 @@ run6 = runTestTT testSuite6
 run7 = runTestTT testSuite7
 run8 = runTestTT testSuite8
 run9 = runTestTT testSuite9
+run10 = runTestTT testSuite10
 
 testSuite6 = test [
     "Caso 1: El usuario tiene dos o mas publicaciones" ~: (publicacionesDe redC usuario1) ~?= [publicacion1_1, publicacion1_2],
@@ -30,6 +31,12 @@ testSuite9 = test [
     "Caso 2: Existe una publicacion sin likes" ~: (tieneUnSeguidorFiel redC usuario1) ~?= False,
     "Caso 3: Existe un seguidor fiel" ~: (tieneUnSeguidorFiel redC usuario3) ~?= True,
     "Caso 4: No existe un seguidor fiel" ~: (tieneUnSeguidorFiel redD usuario3) ~?= False
+    ]
+
+testSuite10 = test [
+    "Caso 1: Existe una cadena de dos amigos" ~: (existeSecuenciaDeAmigos redC usuario1 usuario2) ~?= True,
+    "Caso 2: Existe una cadena de dos o mas amigos" ~: (existeSecuenciaDeAmigos redC usuario1 usuario3) ~?= True,
+    "Caso 3: No existe una cadena" ~: (existeSecuenciaDeAmigos redD usuario1 usuario4) ~?= False
     ]
 
 usuario1 = (1,"Alejo")

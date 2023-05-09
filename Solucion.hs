@@ -175,8 +175,9 @@ existeSecuenciaDeAmigosAux :: RedSocial -> [Usuario] -> Usuario -> Bool
 existeSecuenciaDeAmigosAux _ [] _ = False
 existeSecuenciaDeAmigosAux red (user:users) user2
     | relaciones red == [] = False
-    | pertenece user2 (user:users) = True
-    | otherwise = existeSecuenciaDeAmigosAux redSinUser users user2 || existeSecuenciaDeAmigosAux redSinUser (amigosDe red user) user2
+    | pertenece user2 (user:users) = True
+    | pertenece user2 (amigosDe red user) = True
+    | otherwise = existeSecuenciaDeAmigosAux redSinUser (amigosDe red user) user2 || existeSecuenciaDeAmigosAux redSinUser users user2
     where redSinUser = (usuarios red, quitarRelacionesCon user (relaciones red), publicaciones red)
 
 -- Función auxiliar que elimina de una lista de relaciones todas las relaciones que incluyen a un user dado.
