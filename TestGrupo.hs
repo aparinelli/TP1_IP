@@ -3,10 +3,16 @@ module TestGrupo where
 import Test.HUnit
 import Solucion
 
-
+run6 = runTestTT testSuite6
 run7 = runTestTT testSuite7
 run8 = runTestTT testSuite8
 run9 = runTestTT testSuite9
+
+testSuite6 = test [
+    "Caso 1: El usuario tiene dos o mas publicaciones" ~: (publicacionesDe redC usuario1) ~?= [publicacion1_1, publicacion1_2],
+    "Caso 2: El usuario tiene una unica publicacion" ~: (publicacionesDe redC usuario2) ~?= [publicacion2_1],
+    "Caso 3: El usuario no tiene publicaciones" ~: (publicacionesDe redD usuario2) ~?= []
+    ]
 
 testSuite7 = test [
     "Caso 1: El usuario dio like a todas sus propias publicaciones" ~: (publicacionesQueLeGustanA redD usuario3) ~?= [publicacion3_1, publicacion3_2, publicacion3_3, publicacion3_4],
@@ -33,7 +39,7 @@ usuario4 = (4,"Tazu")
 
 publicacion1_1 = (usuario1,"Este es mi primer posteo", [])
 publicacion1_2 = (usuario1,"Este es mi segundo posteo", [])
-publicacion2_2 = (usuario2, "Soy el unico posteo de Andre", [])
+publicacion2_1 = (usuario2, "Soy el unico posteo de Andre", [])
 publicacion3_1 = (usuario3,"Tiramisu > Chocotorta",[usuario2, usuario3])
 publicacion3_2 = (usuario3,"hoy juega river",[usuario1, usuario2, usuario3, usuario4] )
 publicacion3_3 = (usuario3,"hoy llueve", [usuario2, usuario3])
@@ -44,7 +50,7 @@ publicacion4_3 = (usuario4, "Buenas noches", [])
 
 usuariosC =  [usuario1,usuario2,usuario3,usuario4]
 relacionesC = [(usuario1, usuario2),(usuario2, usuario3),(usuario3,usuario4)]
-publicacionesC = [publicacion1_1, publicacion1_2, publicacion2_2, publicacion3_1, publicacion3_3]
+publicacionesC = [publicacion1_1, publicacion1_2, publicacion2_1, publicacion3_1, publicacion3_3]
 redC = (usuariosC, relacionesC, publicacionesC)
 
 usuariosD = [usuario1,usuario2,usuario3,usuario4]
