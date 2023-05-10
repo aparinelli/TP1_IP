@@ -73,37 +73,20 @@ res = []
 
 ---
 7.
-la funcion publicacionesQueLeGustanA con la redD y usuario8, el usuario 8 le dio like solo a
-sus publicaciones, por ende espero que la funcion me devuelva todas sus publicaciones de
-la redD, con esos valores la funcion devuelve :
 
-[((8,"Juan Pablo"),"hoy juega river",[(6,"Alejo"),(7,"Andre"),(8,"Juan Pablo"),(9,"Tazu")]),
-((8,"Juan Pablo"),"hoy llueve",[(7,"Andre"),(8,"Juan Pablo")]),
-((8,"Juan Pablo"),"No des like",[(8,"Juan Pablo")])]
-
-estas son correctamente todas las pubs del usuario8 en la redD que le dio like.
-si ahora probamos con usuario6 en la misma red como sabemos que le dio like a 1 sola
-publicacion, en la redD, espero recibir solo esa publicacion:
-
-[((8,"Juan Pablo"),"hoy juega river",[(6,"Alejo"),(7,"Andre"),(8,"Juan Pablo"),(9,"Tazu")])]
+”Caso 1: No hay publicaciones ” ˜ : (publicacionesQueLeGustanA redE usuario6) ˜?= []
+”Caso 2: No dio likes ” ˜ : (publicacionesQueLeGustanA redC usuario6) ˜?= []
+”Caso 3: Likes en redC ” ˜ : (publicacionesQueLeGustanA redC usuario7) ˜?= [publicacion3_1, publicacion3_3]
+”Caso 4: Likes en redD ” ˜ : (publicacionesQueLeGustanA redD usuario7) ˜?= [publicacion3_2, publicacion3_3]
 
 ---
 8.
-en la redC, los usuario 7 y 8 le dieron like a las mismas publicaciones
-entonces espero recibir true de la funcion
 
-"lesGustanLasMismasPublicaciones redC usuario7 usuario8" devuelve "True"
-
-en la redD, el usuario7 no le dio like a las mismas publicaciones que
-el usuario 8, espero recibir False
-
-"lesGustanLasMismasPublicaciones redD usuario7 usuario8" devuelve "False"
-
-en la redC, los usuarios 6 y 9 no le dieron like a ninguna publicaion
-entonces las publicaciones a las que le dieron like son las mismas (ninguna)
-espero recibir True 
-
-"lesGustanLasMismasPublicaciones redC usuario6 usuario9" devuelve "True"
+”Caso 1: No hay publicaciones ” ˜ : (lesGustanLasMismasPublicaciones redE usuario8 usuario6) ˜?= True
+”Caso 2: Uno de los dos no dio likes ” ˜ : (lesGustanLasMismasPublicaciones redC usuario6 usuario7) ˜?= False
+”Caso 3: Dieron like a pubs distintas ” ˜ : (lesGustanLasMismasPublicaciones redD usuario7 usuario8) ˜?= False
+”Caso 4: Dieron like a las mismas pubs ” ˜ : (lesGustanLasMismasPublicaciones redD usuario 6 usuario9) ˜?= True
+”Caso 5: Ninguno dio like ” ˜ : (lesGustanLasMismasPublicaciones redC usuario6 usuario9) ˜?= True
 
 ---
 9.
@@ -140,6 +123,11 @@ usuariosD = [usuario6,usuario7,usuario8,usuario9]
 relacionesD = [(usuario6, usuario7), (usuario8, usuario9)]
 publicacionesD = [publicacion8_2, publicacion8_3, publicacion8_4]
 redD = (usuariosD, relacionesD, publicacionesD)
+
+usuariosE = [usuario6,usuario7,usuario8,usuario9]
+relacionesE = [(usuario6, usuario7), (usuario8, usuario9)]
+publicacionesE = []
+redE = (usuariosE, relacionesE, publicacionesE)
 -------------------------------------------------------------------------------------------------
 ---
 10. 
