@@ -4,6 +4,7 @@ import Test.HUnit
 import Solucion
 
 run2 = runTestTT testSuite2
+run5 = runTestTT testSuite5
 run6 = runTestTT testSuite6
 run7 = runTestTT testSuite7
 run8 = runTestTT testSuite8
@@ -12,8 +13,14 @@ run10 = runTestTT testSuite10
 
 testSuite2 = test [
     "Caso 1: El usuario no tiene amigos" ~: (amigosDe redD usuario2 ) ~?= [],
-    "Caso 2: El usuario tiene por lo menos un amigo" ~: (amigosDe redC usuario2) ~?= [(1,"Alejo"), (3,"Juan Pablo")]
+    "Caso 2: El usuario tiene por lo menos un amigo" ~: (amigosDe redC usuario2) ~?= [usuario1, usuario3]
     ]
+
+testSuite5 = test [
+    "Caso 1: No hay ningun usuario en la red social con mas de 2 amigos" ~: (estaRobertoCarlos RedC) ~?= False,
+    "Caso 2: Hay por lo menos un usuario en la red social con mas de 2 amigos" ~: (estaRobertoCarlos RedE) ~?= True
+    ]
+
 testSuite6 = test [
     "Caso 1: El usuario tiene dos o mas publicaciones" ~: (publicacionesDe redC usuario1) ~?= [publicacion1_1, publicacion1_2],
     "Caso 2: El usuario tiene una unica publicacion" ~: (publicacionesDe redC usuario2) ~?= [publicacion2_1],
@@ -42,7 +49,7 @@ testSuite9 = test [
     "Caso 4: No existe un seguidor fiel" ~: (tieneUnSeguidorFiel redD usuario3) ~?= False
     ]
 
-testSuite10 = test [
+testSuite10 = test [
     "Caso 1: Existe una cadena de dos amigos" ~: (existeSecuenciaDeAmigos redC usuario1 usuario2) ~?= True,
     "Caso 2: Existe una cadena de dos o mas amigos" ~: (existeSecuenciaDeAmigos redC usuario1 usuario3) ~?= True,
     "Caso 3: No existe una cadena" ~: (existeSecuenciaDeAmigos redD usuario1 usuario4) ~?= False
@@ -75,6 +82,6 @@ publicacionesD = [publicacion3_1, publicacion3_2, publicacion3_3, publicacion3_4
 redD = (usuariosD, relacionesD, publicacionesD)
 
 usuariosE = [usuario1,usuario2,usuario3,usuario4]
-relacionesE = [(usuario1, usuario2), (usuario3, usuario4)]
+relacionesE = [(usuario1, usuario2), (usuario1, usuario3), (usuario1,usuario4), (usuario3, usuario4)]
 publicacionesE = []
 redE = (usuariosE, relacionesE, publicacionesE)
