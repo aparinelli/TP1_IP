@@ -19,7 +19,7 @@ testSuite7 = test [
     "Caso 1: No hay publicaciones " ~: (publicacionesQueLeGustanA redE usuario1) ~?= []
     "Caso 2: No dio likes " ~: (publicacionesQueLeGustanA redC usuario1) ~?= []
     "Caso 3: Likes en redC " ~: (publicacionesQueLeGustanA redC usuario2) ~?= [publicacion3_1, publicacion3_3]
-    "Caso 4: Likes en redD " ~: (publicacionesQueLeGustanA redD usuario2) ~?= [publicacion3_2, publicacion3_3]
+    "Caso 4: Likes en redD " ~: (publicacionesQueLeGustanA redD usuario2) ~?= [publicacion3_1, publicacion3_2, publicacion3_3]
     ]
 
 testSuite8 = test [
