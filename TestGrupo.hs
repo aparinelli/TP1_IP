@@ -17,8 +17,8 @@ testSuite2 = test [
     ]
 
 testSuite5 = test [
-    "Caso 1: No hay ningun usuario en la red social con mas de 2 amigos" ~: (estaRobertoCarlos RedC) ~?= False,
-    "Caso 2: Hay por lo menos un usuario en la red social con mas de 2 amigos" ~: (estaRobertoCarlos RedE) ~?= True
+    "Caso 1: No hay ningun usuario en la red social con mas de 2 amigos" ~: (estaRobertoCarlos redC) ~?= False,
+    "Caso 2: Hay por lo menos un usuario en la red social con mas de 2 amigos" ~: (estaRobertoCarlos redE) ~?= True
     ]
 
 testSuite6 = test [
