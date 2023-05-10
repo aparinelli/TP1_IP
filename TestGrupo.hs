@@ -3,12 +3,17 @@ module TestGrupo where
 import Test.HUnit
 import Solucion
 
+run2 = runTestTT testSuite2
 run6 = runTestTT testSuite6
 run7 = runTestTT testSuite7
 run8 = runTestTT testSuite8
 run9 = runTestTT testSuite9
 run10 = runTestTT testSuite10
 
+testSuite2 = test [
+    "Caso 1: El usuario no tiene amigos" ~: (amigosDe redD usuario2 ) ~?= [],
+    "Caso 2: El usuario tiene por lo menos un amigo" ~: (amigosDe redC usuario2) ~?= [(1,"Alejo"), (3,"Juan Pablo")]
+    ]
 testSuite6 = test [
     "Caso 1: El usuario tiene dos o mas publicaciones" ~: (publicacionesDe redC usuario1) ~?= [publicacion1_1, publicacion1_2],
     "Caso 2: El usuario tiene una unica publicacion" ~: (publicacionesDe redC usuario2) ~?= [publicacion2_1],
