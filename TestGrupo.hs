@@ -39,7 +39,8 @@ testSuite8 = test [
     "Caso 2: Uno de los dos no dio likes " ~: (lesGustanLasMismasPublicaciones redC usuario1 usuario2) ~?= False,
     "Caso 3: Dieron like a pubs distintas " ~: (lesGustanLasMismasPublicaciones redD usuario2 usuario3) ~?= False,
     "Caso 4: Dieron like a las mismas pubs " ~: (lesGustanLasMismasPublicaciones redD usuario1 usuario4) ~?= True,
-    "Caso 5: Ninguno dio like " ~: (lesGustanLasMismasPublicaciones redC usuario1 usuario4) ~?= True
+    "Caso 5: Ninguno dio like " ~: (lesGustanLasMismasPublicaciones redC usuario1 usuario4) ~?= True,
+    "Caso 6: Es el mismo usuario " ~: (lesGustanLasMismasPublicaciones redC usuario1 usuario1) ~?= True
     ]
 
 testSuite9 = test [
@@ -52,7 +53,8 @@ testSuite9 = test [
 testSuite10 = test [
     "Caso 1: Existe una cadena de dos amigos" ~: (existeSecuenciaDeAmigos redC usuario1 usuario2) ~?= True,
     "Caso 2: Existe una cadena de dos o mas amigos" ~: (existeSecuenciaDeAmigos redC usuario1 usuario3) ~?= True,
-    "Caso 3: No existe una cadena" ~: (existeSecuenciaDeAmigos redD usuario1 usuario4) ~?= False
+    "Caso 3: No existe una cadena" ~: (existeSecuenciaDeAmigos redD usuario1 usuario4) ~?= False,
+    "Caso 4: Es el mismo usuario" ~: (existeSecuenciaDeAmigos redD usuario1 usuario1) ~?= True
     ]
 
 usuario1 = (1,"Alejo")
