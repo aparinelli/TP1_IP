@@ -5,30 +5,14 @@ module Solucion where
 -- Integrante 3: Juan Pablo Tarela, juanptarela@gmail.com,    151/23
 -- Integrante 4: Mateo Otazúa Arce, tazuarce@gmail.com,       88/23
 
-{- 
-
-████████ ██ ██████   ██████  ███████ 
-   ██    ██ ██   ██ ██    ██ ██      
-   ██    ██ ██████  ██    ██ ███████ 
-   ██    ██ ██      ██    ██      ██ 
-   ██    ██ ██       ██████  ███████     
-
--}
+{- TIPOS -}
 
 type Usuario = (Integer, String) -- (id, nombre)
 type Relacion = (Usuario, Usuario) -- usuarios que se relacionan
 type Publicacion = (Usuario, String, [Usuario]) -- (usuario que publica, texto publicacion, likes)
 type RedSocial = ([Usuario], [Relacion], [Publicacion])
 
-{-
-
-██████   █████  ███████ ██  ██████  █████  ███████ 
-██   ██ ██   ██ ██      ██ ██      ██   ██ ██      
-██████  ███████ ███████ ██ ██      ███████ ███████ 
-██   ██ ██   ██      ██ ██ ██      ██   ██      ██ 
-██████  ██   ██ ███████ ██  ██████ ██   ██ ███████ 
- 
--}
+{- BÁSICAS -}
 
 usuarios :: RedSocial -> [Usuario]
 usuarios (us, _, _) = us
@@ -51,17 +35,7 @@ usuarioDePublicacion (u, _, _) = u
 likesDePublicacion :: Publicacion -> [Usuario]
 likesDePublicacion (_, _, us) = us
 
-{- 
-
-███████      ██ ███████ ██████   ██████ ██  ██████ ██  ██████  ███████ 
-██           ██ ██      ██   ██ ██      ██ ██      ██ ██    ██ ██      
-█████        ██ █████   ██████  ██      ██ ██      ██ ██    ██ ███████ 
-██      ██   ██ ██      ██   ██ ██      ██ ██      ██ ██    ██      ██ 
-███████  █████  ███████ ██   ██  ██████ ██  ██████ ██  ██████  ███████      
-
--}
-
-
+{- EJERCICIOS -}
 
 {- 1 -}
 
@@ -98,7 +72,7 @@ cantidadDeAmigos redX user = longitud (amigosDe redX user)
 
 -- Dada una red, devuelve su usuario con más amigos (si varios tienen la mayor cantidad, da uno de ellos)
 usuarioConMasAmigos :: RedSocial -> Usuario
-usuarioConMasAmigos redX = compararAmigos redX (usuarios(redX)) -- usa una función auxiliar para hacer recursión sobre la lista de usuarios fácilmente
+usuarioConMasAmigos redX = compararAmigos redX (usuarios(redX))
 
 -- Función auxiliar que hace recursión comparando la cantidad de amigos de n-1 y n, devolviendo el que sea mayor
 compararAmigos :: RedSocial -> [Usuario] -> Usuario
@@ -188,15 +162,7 @@ quitarRelacionesCon user (rel:rels)
     | otherwise = rel : relsSinUser
     where relsSinUser = quitarRelacionesCon user rels
 
-{-
-
- █████  ██    ██ ██   ██ ██ ██      ██  █████  ██████  ███████ ███████ 
-██   ██ ██    ██  ██ ██  ██ ██      ██ ██   ██ ██   ██ ██      ██      
-███████ ██    ██   ███   ██ ██      ██ ███████ ██████  █████   ███████ 
-██   ██ ██    ██  ██ ██  ██ ██      ██ ██   ██ ██   ██ ██           ██ 
-██   ██  ██████  ██   ██ ██ ███████ ██ ██   ██ ██   ██ ███████ ███████    
-
--}
+{- AUXILIARES -}
 
 
 longitud :: [t] -> Int
@@ -213,19 +179,7 @@ quitar n (x:xs)
     | n == x = xs
     | n /= x = x : quitar n xs
 
-{- 
-
-        (            *             )              
-   (    )\ )       (  `         ( /(   *   )      
-   )\  (()/(  (    )\))(   (    )\())` )  /( (    
- (((_)  /(_)) )\  ((_)()\  )\  ((_)\  ( )(_)))\   
- )\___ (_))  ((_) (_()((_)((_)  _((_)(_(_())((_)  
-((/ __|| |   | __||  \/  || __|| \| ||_   _|| __| 
- | (__ | |__ | _| | |\/| || _| | .` |  | |  | _|  
-  \___||____||___||_|  |_||___||_|\_|  |_|  |___| 
-                                                  
-                                                                                
-                                                                                
+{-
                      *%.      ##                                                
                   #               %..*,                                         
                 #            @ @   (...,,                                       
@@ -254,7 +208,5 @@ quitar n (x:xs)
                         %............./..%                      .(.......(      
                            .%,............(.                                    
                                 (#..........,#                                  
-                                      (%,.....&                                 
-                                                                                
-                                                                                
+                                      (%,.....&                                                               
  -}
