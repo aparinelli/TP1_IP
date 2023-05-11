@@ -17,8 +17,8 @@ testSuite2 = test [
     ]
 
 testSuite5 = test [
-    "Caso 1: No hay ningun usuario en la red social con mas de 2 amigos" ~: (estaRobertoCarlos redC) ~?= False,
-    "Caso 2: Hay por lo menos un usuario en la red social con mas de 2 amigos" ~: (estaRobertoCarlos redE) ~?= True
+    "Caso 1: No hay ningun usuario en la red social con mas de 10 amigos" ~: (estaRobertoCarlos redC) ~?= False,
+    "Caso 2: Hay por lo menos un usuario en la red social con mas de 10 amigos" ~: (estaRobertoCarlos redE) ~?= True
     ]
 
 testSuite6 = test [
@@ -61,6 +61,14 @@ usuario1 = (1,"Alejo")
 usuario2 = (2,"Andre")
 usuario3 = (3,"Juan Pablo")
 usuario4 = (4,"Tazu")
+usuario5 = (5,"Jaimito")
+usuario6 = (6,"Juan")
+usuario7 = (7,"Pablo")
+usuario8 = (8,"Evangelina")
+usuario9 = (9,"Virginia")
+usuario10 = (10,"Kiki")
+usuario11 = (11,"Alejo")
+usuario12 = (12,"RobertoCarlos")
 
 publicacion1_1 = (usuario1,"Este es mi primer posteo", [])
 publicacion1_2 = (usuario1,"Este es mi segundo posteo", [])
@@ -83,7 +91,7 @@ relacionesD = [(usuario1, usuario2), (usuario3, usuario4)]
 publicacionesD = [publicacion3_1, publicacion3_2, publicacion3_3, publicacion3_4]
 redD = (usuariosD, relacionesD, publicacionesD)
 
-usuariosE = [usuario1,usuario2,usuario3,usuario4]
-relacionesE = [(usuario1, usuario2), (usuario1, usuario3), (usuario1,usuario4), (usuario3, usuario4)]
+usuariosE = [usuario1, usuario2, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10, usuario11]
+relacionesE = [(usuario12, usuario1), (usuario12, usuario2), (usuario12, usuario3), (usuario12,usuario4), (usuario12, usuario5), (usuario12, usuario6), (usuario12, usuario7), (usuario12,usuario8), (usuario12, usuario9), (usuario12, usuario10), (usuario12, usuario11)]
 publicacionesE = []
 redE = (usuariosE, relacionesE, publicacionesE)
