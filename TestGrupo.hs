@@ -3,7 +3,10 @@ module TestGrupo where
 import Test.HUnit
 import Solucion
 
+run1 = runTestTT testSuite1
 run2 = runTestTT testSuite2
+run3 = runTestTT testSuite3
+run4 = runTestTT testSuite4
 run5 = runTestTT testSuite5
 run6 = runTestTT testSuite6
 run7 = runTestTT testSuite7
@@ -11,9 +14,25 @@ run8 = runTestTT testSuite8
 run9 = runTestTT testSuite9
 run10 = runTestTT testSuite10
 
+testSuite1 = test [
+    "Caso 1: La red no tiene usuarios" ~: (nombresDeUsuarios redF) ~?= [],
+    "Caso 2: La red tiene por lo menos un usuario" ~: (nombresDeUsuarios redC) ~?= ["Alejo","Andre","Juan Pablo","Tazu","Jaimito"],
+    "Caso 3: La red tiene usuarios con nombres repetidos" ~: (nombresDeUsuarios redE) ~?= ["Alejo","Andre","Juan Pablo","Tazu","Jaimito","Juan","Pablo","Evangelina","Virginia","Kiki","Alejo","RobertoCarlos"]
+    ]
+
 testSuite2 = test [
-    "Caso 1: El usuario no tiene amigos" ~: (amigosDe redD usuario2 ) ~?= [],
+    "Caso 1: El usuario no tiene amigos" ~: (amigosDe redD usuario2) ~?= [], -- el usuario 2 en la redD tiene un amigo
     "Caso 2: El usuario tiene por lo menos un amigo" ~: (amigosDe redC usuario2) ~?= [usuario1, usuario3]
+    ]
+
+testSuite3 = test [
+    "Caso 1: El usuario no tiene amigos" ~: (cantidadDeAmigos redC usuario5) ~?= 0,
+    "Caso 2: El usuario tiene por lo menos un amigo" ~: (cantidadDeAmigos redE usuario12) ~?= 11
+    ]
+
+testSuite4 = test [
+    "Caso 1: La red solo tiene un usuario" ~: (usuarioConMasAmigos redG) ~?= usuario1,
+    "Caso 2: La red tiene varios usuarios" ~: (usuarioConMasAmigos redE) ~?= usuario12
     ]
 
 testSuite5 = test [
@@ -81,7 +100,7 @@ publicacion4_1 = (usuario4, "Buenos dias", [])
 publicacion4_2 = (usuario4, "Buenas tardes", [])
 publicacion4_3 = (usuario4, "Buenas noches", [])
 
-usuariosC =  [usuario1,usuario2,usuario3,usuario4]
+usuariosC =  [usuario1,usuario2,usuario3,usuario4, usuario5]
 relacionesC = [(usuario1, usuario2),(usuario2, usuario3),(usuario3,usuario4)]
 publicacionesC = [publicacion1_1, publicacion1_2, publicacion2_1, publicacion3_1, publicacion3_3]
 redC = (usuariosC, relacionesC, publicacionesC)
@@ -91,7 +110,17 @@ relacionesD = [(usuario1, usuario2), (usuario3, usuario4)]
 publicacionesD = [publicacion3_1, publicacion3_2, publicacion3_3, publicacion3_4]
 redD = (usuariosD, relacionesD, publicacionesD)
 
-usuariosE = [usuario1, usuario2, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10, usuario11]
+usuariosE = [usuario1, usuario2, usuario3, usuario4, usuario5, usuario6, usuario7, usuario8, usuario9, usuario10, usuario11, usuario12]
 relacionesE = [(usuario12, usuario1), (usuario12, usuario2), (usuario12, usuario3), (usuario12,usuario4), (usuario12, usuario5), (usuario12, usuario6), (usuario12, usuario7), (usuario12,usuario8), (usuario12, usuario9), (usuario12, usuario10), (usuario12, usuario11)]
 publicacionesE = []
 redE = (usuariosE, relacionesE, publicacionesE)
+
+usuariosF = []
+relacionesF = []
+publicacionesF = []
+redF = (usuariosF, relacionesF, publicacionesF)
+
+usuariosG = [usuario1]
+relacionesG = []
+publicacionesG = []
+redG = (usuariosG, relacionesG, publicacionesG)
