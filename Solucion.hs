@@ -117,22 +117,11 @@ proyectarPublicaciones user (pub:pubs)
 
 --- Dados dos usuarios, devuelve True si y solo si ambos dieron like a exactamente las mismas publicaciones de una red.
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
-lesGustanLasMismasPublicaciones red user1 user2 = dieronLikes user1 (publicacionesQueLeGustanA red user1) user2 (publicacionesQueLeGustanA red user2)
+lesGustanLasMismasPublicaciones red user1 user2 = comparaConjuntos (publicacionesQueLeGustanA red user1) (publicacionesQueLeGustanA red user2) && comparaConjuntos (publicacionesQueLeGustanA red user2) (publicacionesQueLeGustanA red user1)
 
--- Esta funcion se encarga de verificar si ningun usuario le dio like a alguna publicacion
--- De no ser asi, emplea la funcion perteneceEnLikes
-dieronLikes :: Usuario -> [Publicacion] -> Usuario -> [Publicacion] -> Bool
-dieronLikes _ [] _ [] = True
-dieronLikes _ [] _ _ = False
-dieronLikes _ _ _ [] = False
-dieronLikes user1 pubs1 user2 pubs2 = perteneceEnLikes user1 pubs2 && perteneceEnLikes user2 pubs1
-
--- Esta funcion comprueba que el usuario pertenezca a todas las lista de likes
--- Sin importar el orden
-perteneceEnLikes :: Usuario -> [Publicacion] -> Bool
-perteneceEnLikes _ [] = True
-perteneceEnLikes user (pub:pubs) = pertenece user (likesDePublicacion pub) && perteneceEnLikes user pubs
-
+comparaConjuntos :: (Eq t) => [t] -> [t] -> Bool
+comparaConjuntos [] _ = True
+comparaConjuntos (x:xs) y = pertenece x y && comparaConjuntos xs y
 
 {- 9 -}
 
