@@ -53,7 +53,7 @@ proyectarNombres (user:users) = (nombreDeUsuario user) : (proyectarNombres users
 amigosDe :: RedSocial -> Usuario -> [Usuario]
 amigosDe red user = amigosDeAux (relaciones red) user
 
--- Función auxiliar que hace recursión unicamente sobre los elementos que me interesan de la red social.
+-- Hace recursión unicamente sobre las relaciones la red social.
 amigosDeAux :: [Relacion] -> Usuario -> [Usuario]
 amigosDeAux [] _ = [] 
 amigosDeAux (rel:rels) user 
@@ -70,11 +70,11 @@ cantidadDeAmigos redX user = longitud (amigosDe redX user)
 
 {- 4 -}
 
--- Dada una red, devuelve su usuario con más amigos (si varios tienen la mayor cantidad, da uno de ellos)
+-- Dada una red, devuelve su usuario con más amigos (si varios tienen la mayor cantidad, da uno de ellos).
 usuarioConMasAmigos :: RedSocial -> Usuario
 usuarioConMasAmigos redX = compararAmigos redX (usuarios(redX))
 
--- Función auxiliar que hace recursión comparando la cantidad de amigos de n-1 y n, devolviendo el que sea mayor
+-- Hace recursión comparando la cantidad de amigos de n-1 y n, devolviendo el que sea mayor
 compararAmigos :: RedSocial -> [Usuario] -> Usuario
 compararAmigos redX (user:users)
     | users == [] = user
@@ -101,12 +101,12 @@ publicacionesDe red user
 
 {- 7 -}
 
--- Dada una red  una lista con las publicaciones que le gustaron al usuario
--- llamo a otra funcion que da la lista de publicaciones que le dio like el usuario
+-- Dada una red y un usuario, devuelve todas las publicaciones que le gustaron al usuario.
+-- Lo hace llamando a otra función que da la lista de publicaciones que le dio like el usuario.
 publicacionesQueLeGustanA :: RedSocial -> Usuario -> [Publicacion]
 publicacionesQueLeGustanA red user = proyectarPublicaciones user (publicaciones red)          
                                                                                                
---verifico que el user le dio like si el user no dio like sigo comprobando con el resto de pubs 
+-- Verifico que el user le dio like si el user no dio like sigo comprobando con el resto de pubs 
 proyectarPublicaciones :: Usuario -> [Publicacion] -> [Publicacion]
 proyectarPublicaciones _ [] = []
 proyectarPublicaciones user (pub:pubs)
@@ -119,6 +119,7 @@ proyectarPublicaciones user (pub:pubs)
 lesGustanLasMismasPublicaciones :: RedSocial -> Usuario -> Usuario -> Bool
 lesGustanLasMismasPublicaciones red user1 user2 = comparaConjuntos (publicacionesQueLeGustanA red user1) (publicacionesQueLeGustanA red user2) && comparaConjuntos (publicacionesQueLeGustanA red user2) (publicacionesQueLeGustanA red user1)
 
+-- Verifica que dos conjuntos sean iguales.
 comparaConjuntos :: (Eq t) => [t] -> [t] -> Bool
 comparaConjuntos [] _ = True
 comparaConjuntos (x:xs) y = pertenece x y && comparaConjuntos xs y
@@ -129,8 +130,8 @@ comparaConjuntos (x:xs) y = pertenece x y && comparaConjuntos xs y
 tieneUnSeguidorFiel :: RedSocial -> Usuario -> Bool
 tieneUnSeguidorFiel red user = seguidorFielEnPublicaciones (publicacionesDe red user) (quitar user (usuarios red))
 
---por la funcion likeoTodasLasPubs verifica si un usuario le dio like a todas las publicaciones de la lista.
---de no ser asi, prueba con el siguiente usuario de la lista
+-- Mediante la función likeoTodasLasPubs verifica si un usuario le dio like a todas las publicaciones de la lista.
+-- De no ser así, prueba con el siguiente usuario de la lista.
 seguidorFielEnPublicaciones :: [Publicacion] -> [Usuario] -> Bool
 seguidorFielEnPublicaciones _ [] = False                               
 seguidorFielEnPublicaciones [] _ = False                                 
@@ -138,7 +139,7 @@ seguidorFielEnPublicaciones pubs (user:users)
     | likeoTodasLasPubs pubs user = True                                         
     | not (likeoTodasLasPubs pubs user) = seguidorFielEnPublicaciones pubs users
 
---esta funcion verifica si un usuario pertenece a la lista de likes de cada publicacion de un lista
+-- Verifica si un usuario pertenece a la lista de likes de cada publicacion de una lista.
 likeoTodasLasPubs :: [Publicacion] -> Usuario -> Bool
 likeoTodasLasPubs (pub:pubs) user
     | pubs == [] && pertenece user (likesDePublicacion pub) = True          
@@ -151,7 +152,8 @@ likeoTodasLasPubs (pub:pubs) user
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
 existeSecuenciaDeAmigos red user1 user2 = existeSecuenciaDeAmigosAux red (amigosDe red user1) user2
 
--- Función auxiliar que recorre las relaciones de la red, quitando las ya visitadas hasta encontrar (o no) a user2.
+-- Verifica si el user2 está en la lista de users dada o en los amigos del primer user.
+-- De no ser así, prueba con los amigos de cada uno de los users de la lista dada.
 existeSecuenciaDeAmigosAux :: RedSocial -> [Usuario] -> Usuario -> Bool
 existeSecuenciaDeAmigosAux _ [] _ = False
 existeSecuenciaDeAmigosAux red (user:users) user2
@@ -161,7 +163,7 @@ existeSecuenciaDeAmigosAux red (user:users) user2
     | otherwise = existeSecuenciaDeAmigosAux redSinUser (amigosDe red user) user2 || existeSecuenciaDeAmigosAux redSinUser users user2
     where redSinUser = (usuarios red, quitarRelacionesCon user (relaciones red), publicaciones red)
 
--- Función auxiliar que elimina de una lista de relaciones todas las relaciones que incluyen a un user dado.
+-- Elimina de una lista de relaciones todas las relaciones que incluyen a un user dado.
 quitarRelacionesCon :: Usuario -> [Relacion] -> [Relacion]
 quitarRelacionesCon _ [] = []
 quitarRelacionesCon user (rel:rels) 
@@ -170,7 +172,6 @@ quitarRelacionesCon user (rel:rels)
     where relsSinUser = quitarRelacionesCon user rels
 
 {- AUXILIARES -}
-
 
 longitud :: [t] -> Int
 longitud [] = 0
