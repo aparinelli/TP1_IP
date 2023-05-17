@@ -21,7 +21,7 @@ testSuite1 = test [
     ]
 
 testSuite2 = test [
-    "Caso 1: El usuario no tiene amigos" ~: (amigosDe redD usuario2) ~?= [], -- el usuario 2 en la redD tiene un amigo
+    "Caso 1: El usuario no tiene amigos" ~: (amigosDe redG usuario2) ~?= [],
     "Caso 2: El usuario tiene por lo menos un amigo" ~: (amigosDe redC usuario2) ~?= [usuario1, usuario3]
     ]
 
